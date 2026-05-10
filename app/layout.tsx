@@ -1,9 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#060e1a",
+};
+
 export const metadata: Metadata = {
-  title: "BunkerBoard — Marine Fuel & Crude",
+  title: "BunkerBoard",
   description: "벙커유 & 원유 가격 대시보드 (Platts vs Ship & Bunker 비교)",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "BunkerBoard",
+  },
+  formatDetection: { telephone: false },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
