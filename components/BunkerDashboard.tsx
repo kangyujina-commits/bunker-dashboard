@@ -98,6 +98,58 @@ const Card = ({ children, style = {} }: { children: React.ReactNode; style?: Rea
   </div>
 );
 
+// 52주 고/저 + 현재 위치 백분위
+function compute52w(history: HistoryEntry[], key: Crude): { high: number; low: number; pct: number; current: number } | null {
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 365);
+  const cutoffISO = cutoff.toISOString().slice(0, 10);
+  const vals = history
+    .filter(h => h.fullDate >= cutoffISO && h[key] != null)
+    .map(h => h[key] as number);
+  if (vals.length < 2) return null;
+  const high = Math.max(...vals);
+  const low  = Math.min(...vals);
+  const current = vals[vals.length - 1];
+  const pct = high > low ? ((current - low) / (high - low)) * 100 : 50;
+  return { high, low, current, pct };
+}
+
+// 단순 이동평균 (SMA) — null 값은 건너뜀
+function withSMA(history: HistoryEntry[], keys: readonly Crude[], period: number): HistoryEntry[] {
+  if (period <= 1) return history;
+  return history.map((row, i) => {
+    const out: HistoryEntry = { ...row };
+    for (const k of keys) {
+      const window: number[] = [];
+      for (let j = Math.max(0, i - period + 1); j <= i; j++) {
+        const v = history[j]?.[k];
+        if (typeof v === "number") window.push(v);
+      }
+      out[`${k}_MA`] = window.length >= Math.min(period, 5) ? +(window.reduce((a, b) => a + b, 0) / window.length).toFixed(2) : null;
+    }
+    return out;
+  });
+}
+
+// 스프레드 시계열: Brent-WTI, Brent-Dubai, WTI-Dubai
+function buildSpreadData(history: HistoryEntry[]): HistoryEntry[] {
+  return history.map(row => {
+    const out: HistoryEntry = { date: row.date, fullDate: row.fullDate };
+    const w = row.WTI as number | null;
+    const b = row.Brent as number | null;
+    const d = row.Dubai as number | null;
+    out["Brent−WTI"]   = (b != null && w != null) ? +(b - w).toFixed(2) : null;
+    out["Brent−Dubai"] = (b != null && d != null) ? +(b - d).toFixed(2) : null;
+    out["WTI−Dubai"]   = (w != null && d != null) ? +(w - d).toFixed(2) : null;
+    return out;
+  });
+}
+
+const SPREAD_COLORS: Record<string, string> = {
+  "Brent−WTI":   "#a3e635",
+  "Brent−Dubai": "#fb7185",
+  "WTI−Dubai":   "#facc15",
+};
+
 export default function BunkerDashboard() {
   const [mainTab, setMainTab]             = useState("dashboard");
   const [activeBunker, setActiveBunker]   = useState<Product>("VLSFO");
@@ -114,6 +166,8 @@ export default function BunkerDashboard() {
   const [saved, setSaved]                 = useState(false);
   const [activeNewsSource, setActiveNewsSource] = useState<keyof typeof NEWS_SOURCES>("Ship & Bunker");
   const [crudeRange, setCrudeRange]             = useState(30);
+  const [maMode, setMaMode]                     = useState<"off" | "20" | "50">("off");
+  const [forwardCurve, setForwardCurve]         = useState<{ curve: Array<{ mLabel: string; shortLabel: string; price: number }>; structure: string | null; m1ToLastSpread: number | null } | null>(null);
 
   const today    = new Date();
   const todayStr = `${today.getMonth() + 1}/${today.getDate()}`;
@@ -135,6 +189,14 @@ export default function BunkerDashboard() {
   }, []);
 
   const [dubaiSource, setDubaiSource] = useState<string>("");
+
+  // Forward curve fetch (Brent M1-M6)
+  useEffect(() => {
+    fetch("/api/forward-curve")
+      .then(r => r.json())
+      .then(setForwardCurve)
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     fetch("/api/crude-prices?range=1y")
@@ -334,6 +396,7 @@ export default function BunkerDashboard() {
   // ── 대시보드 탭 ───────────────────────────────────
   const CrudeCard = ({ c }: { c: Crude }) => {
     const delta = getCrudeDelta(c);
+    const r52 = compute52w(crudeHistory, c);
     return (
       <Card style={{ border: `1px solid ${CRUDE_COLORS[c]}44`, overflow: "hidden", minWidth: 0 }}>
         <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 6, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c}</div>
@@ -343,7 +406,20 @@ export default function BunkerDashboard() {
         <div style={{ fontSize: 11, color: delta.up ? "#f97316" : "#38bdf8", marginTop: 6, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           {delta.text} <span style={{ color: "#475569" }}>vs 전일</span>
         </div>
-        {c === "Dubai" && <div style={{ fontSize: 10, color: "#334155", marginTop: 3 }}>
+        {/* 52주 고/저 위치 바 */}
+        {r52 && (
+          <div style={{ marginTop: 8 }}>
+            <div style={{ position: "relative", height: 4, background: "#0f2744", borderRadius: 2, overflow: "hidden" }}>
+              <div style={{ position: "absolute", left: `${Math.max(0, Math.min(100, r52.pct))}%`, top: -2, transform: "translateX(-50%)", width: 8, height: 8, borderRadius: 4, background: CRUDE_COLORS[c] }} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 3, fontSize: 9, color: "#475569", fontFamily: "monospace" }}>
+              <span>${r52.low.toFixed(0)}</span>
+              <span style={{ color: "#94a3b8" }}>{r52.pct.toFixed(0)}%ile · 52w</span>
+              <span>${r52.high.toFixed(0)}</span>
+            </div>
+          </div>
+        )}
+        {c === "Dubai" && <div style={{ fontSize: 10, color: "#334155", marginTop: 6 }}>
           {crudePrice[c] ? `※ ${dubaiSource || "Murban proxy"}` : "※ 로딩 실패"}
         </div>}
       </Card>
@@ -375,11 +451,11 @@ export default function BunkerDashboard() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 16 }}>
         {CRUDES.map(c => <CrudeCard key={c} c={c} />)}
       </div>
-      <Card style={{ marginBottom: 24 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16, gap: 8 }}>
+      <Card style={{ marginBottom: 16 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12, gap: 8, flexWrap: "wrap" }}>
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, color: "#f8fafc" }}>원유 가격 추이</div>
-            <div style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>USD/bbl · Yahoo Finance</div>
+            <div style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>USD/bbl · Stooq + OilPrice</div>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
             {([["30일", 30], ["1년", 365]] as const).map(([label, val]) => (
@@ -387,10 +463,17 @@ export default function BunkerDashboard() {
             ))}
           </div>
         </div>
+        {/* MA 토글 */}
+        <div style={{ display: "flex", gap: 6, marginBottom: 12, alignItems: "center" }}>
+          <span style={{ fontSize: 10, color: "#475569" }}>MA:</span>
+          {([["off", "끄기"], ["20", "20일"], ["50", "50일"]] as const).map(([val, label]) => (
+            <button key={val} onClick={() => setMaMode(val)} style={{ padding: "3px 10px", borderRadius: 5, fontSize: 10, border: `1px solid ${maMode === val ? "#a3e635" : "#1e3a5f"}`, background: maMode === val ? "#a3e63522" : "transparent", color: maMode === val ? "#a3e635" : "#475569", cursor: "pointer", fontFamily: "inherit" }}>{label}</button>
+          ))}
+        </div>
         {crudeLoading
           ? <div style={{ height: 180, display: "flex", alignItems: "center", justifyContent: "center", color: "#475569" }}>로딩 중...</div>
           : <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={crudeHistory.slice(-crudeRange)}>
+              <LineChart data={(maMode === "off" ? crudeHistory : withSMA(crudeHistory, CRUDES, parseInt(maMode))).slice(-crudeRange)}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
                 <XAxis
                   dataKey="date"
@@ -411,9 +494,85 @@ export default function BunkerDashboard() {
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 10, color: "#94a3b8", paddingTop: 8 }} />
                 {CRUDES.map(c => <Line key={c} type="monotone" dataKey={c} stroke={CRUDE_COLORS[c]} strokeWidth={2} dot={false} connectNulls />)}
+                {maMode !== "off" && CRUDES.map(c => (
+                  <Line key={`${c}_MA`} type="monotone" dataKey={`${c}_MA`} name={`${c} MA${maMode}`} stroke={CRUDE_COLORS[c]} strokeWidth={1} strokeDasharray="4 3" dot={false} connectNulls opacity={0.55} />
+                ))}
               </LineChart>
             </ResponsiveContainer>
         }
+      </Card>
+
+      {/* Brent 선물 forward curve (M1-M6) */}
+      <Card style={{ marginBottom: 16 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12, gap: 8, flexWrap: "wrap" }}>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: "#f8fafc" }}>Brent 선물 곡선 (M1–M6)</div>
+            <div style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>ICE Brent 월별 선물 · USD/bbl</div>
+          </div>
+          {forwardCurve?.structure && (
+            <div style={{ fontSize: 11, fontWeight: 600, color: forwardCurve.structure === "backwardation" ? "#f97316" : forwardCurve.structure === "contango" ? "#38bdf8" : "#94a3b8", padding: "4px 10px", borderRadius: 6, background: forwardCurve.structure === "backwardation" ? "#f9731622" : forwardCurve.structure === "contango" ? "#38bdf822" : "#1e3a5f44" }}>
+              {forwardCurve.structure === "backwardation" ? "백워데이션" : forwardCurve.structure === "contango" ? "콘탱고" : "Flat"}
+              {forwardCurve.m1ToLastSpread != null && ` · M1→M${forwardCurve.curve.length} ${forwardCurve.m1ToLastSpread > 0 ? "+" : ""}${forwardCurve.m1ToLastSpread}`}
+            </div>
+          )}
+        </div>
+        {!forwardCurve || forwardCurve.curve.length === 0 ? (
+          <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center", color: "#475569", fontSize: 12 }}>
+            로딩 중...
+          </div>
+        ) : (
+          <>
+            <ResponsiveContainer width="100%" height={180}>
+              <LineChart data={forwardCurve.curve} margin={{ top: 4, right: 8, bottom: 0, left: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
+                <XAxis dataKey="mLabel" tick={{ fontSize: 10, fill: "#94a3b8" }} tickLine={false} axisLine={false} />
+                <YAxis tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} domain={["auto", "auto"]} width={44} />
+                <Tooltip
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  content={(({ active, payload, label }: any) => {
+                    if (!active || !payload?.length) return null;
+                    const p = payload[0]?.payload as { shortLabel?: string; price?: number } | undefined;
+                    if (!p) return null;
+                    return (
+                      <div style={{ background: "#0f172a", border: "1px solid #1e3a5f", borderRadius: 8, padding: "8px 12px", fontSize: 12, color: "#e2e8f0" }}>
+                        <div style={{ color: "#94a3b8", fontSize: 10 }}>{label} · {p.shortLabel}</div>
+                        <div style={{ color: "#c084fc", fontFamily: "monospace" }}>${p.price}</div>
+                      </div>
+                    );
+                  })}
+                />
+                <Line type="monotone" dataKey="price" stroke="#c084fc" strokeWidth={2} dot={{ r: 4, fill: "#c084fc" }} />
+              </LineChart>
+            </ResponsiveContainer>
+            <div style={{ marginTop: 8, fontSize: 9, color: "#334155" }}>
+              {forwardCurve.curve.map(p => `${p.mLabel} ${p.shortLabel}: $${p.price}`).join("  ·  ")}
+            </div>
+          </>
+        )}
+      </Card>
+
+      {/* 원유 스프레드 (Brent-WTI / Brent-Dubai / WTI-Dubai) */}
+      <Card style={{ marginBottom: 24 }}>
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: "#f8fafc" }}>원유 스프레드</div>
+          <div style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>벤치마크 간 가격차 · USD/bbl</div>
+        </div>
+        {crudeLoading || crudeHistory.length === 0 ? (
+          <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center", color: "#475569", fontSize: 12 }}>로딩 중...</div>
+        ) : (
+          <ResponsiveContainer width="100%" height={180}>
+            <LineChart data={buildSpreadData(crudeHistory).slice(-crudeRange)}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
+              <XAxis dataKey="date" tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} interval={crudeRange === 30 ? 2 : 20} />
+              <YAxis tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} domain={["auto", "auto"]} width={40} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ fontSize: 10, color: "#94a3b8", paddingTop: 8 }} />
+              {(["Brent−WTI", "Brent−Dubai", "WTI−Dubai"] as const).map(s => (
+                <Line key={s} type="monotone" dataKey={s} stroke={SPREAD_COLORS[s]} strokeWidth={2} dot={false} connectNulls />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        )}
       </Card>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
         <div style={{ flex: 1, height: 1, background: "#1e3a5f" }} />
