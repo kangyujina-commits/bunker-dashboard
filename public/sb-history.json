@@ -1,0 +1,870 @@
+{
+  "ports": {
+    "Singapore": {
+      "VLSFO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 801.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 816
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 843
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 862
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 815
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 785
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 814
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 777
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 764
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 759.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 755
+        }
+      ],
+      "IFO380": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 694
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 712.5
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 710
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 726
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 695.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 690
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 720
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 690.5
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 688.5
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 668.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 673.5
+        }
+      ],
+      "LSMGO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 1144.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 1182
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 1175
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 1258
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 1281.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 1287
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 1351.5
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 1292.5
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 1274.5
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 1318.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 1322.5
+        }
+      ]
+    },
+    "Fujairah": {
+      "VLSFO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 880.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 899.5
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 945
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 939.5
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 896
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 890
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 895
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 848.5
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 824
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 806.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 790.5
+        }
+      ],
+      "IFO380": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 704
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 690
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 720.5
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 723.5
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 681.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 707.5
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 707.5
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 667
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 672.5
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 661.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 644.5
+        }
+      ],
+      "LSMGO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 1482.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 1450
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 1481
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 1553
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 1529
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 1547
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 1572
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 1525
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 1497
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 1514.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 1507
+        }
+      ]
+    },
+    "Rotterdam": {
+      "VLSFO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 791.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 786.5
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 799.5
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 842.5
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 792.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 787.5
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 792.5
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 772
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 744
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 720.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 717
+        }
+      ],
+      "IFO380": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 690.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 679
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 682
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 690.5
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 679
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 669.5
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 686.5
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 673
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 654.5
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 640.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 635
+        }
+      ],
+      "LSMGO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 1192.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 1163
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 1220
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 1312.5
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 1310.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 1338.5
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 1336.5
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 1303
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 1284
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 1288
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 1276.5
+        }
+      ]
+    },
+    "Hong Kong": {
+      "VLSFO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 834.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 867
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 902.5
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 888.5
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 845.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 840.5
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 835.5
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 813
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 798
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 785
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 782.5
+        }
+      ],
+      "IFO380": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 722.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 746
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 769
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 775
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 750.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 772
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 755
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 745.5
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 745.5
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 714.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 712.5
+        }
+      ],
+      "LSMGO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 1205
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 1232
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 1271
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 1360
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 1390
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 1340.5
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 1381.5
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 1309
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 1344
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 1369.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 1345.5
+        }
+      ]
+    },
+    "LA/Long Beach": {
+      "VLSFO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 1033.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 1053.5
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 1080.5
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 1068
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 1042
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 1040
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 1040
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 1042
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 1006
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 1003.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 993.5
+        }
+      ],
+      "IFO380": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 828.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 853.5
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 873.5
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 881
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 888.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 883
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 883
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 858
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 851
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 837.5
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 825
+        }
+      ],
+      "LSMGO": [
+        {
+          "date": "F May 8",
+          "dateISO": "2026-05-08",
+          "price": 1435.5
+        },
+        {
+          "date": "T May 7",
+          "dateISO": "2026-05-07",
+          "price": 1391.5
+        },
+        {
+          "date": "W May 6",
+          "dateISO": "2026-05-06",
+          "price": 1430
+        },
+        {
+          "date": "T May 5",
+          "dateISO": "2026-05-05",
+          "price": 1431
+        },
+        {
+          "date": "M May 4",
+          "dateISO": "2026-05-04",
+          "price": 1426.5
+        },
+        {
+          "date": "F May 1",
+          "dateISO": "2026-05-01",
+          "price": 1428
+        },
+        {
+          "date": "T Apr 30",
+          "dateISO": "2026-04-30",
+          "price": 1458
+        },
+        {
+          "date": "W Apr 29",
+          "dateISO": "2026-04-29",
+          "price": 1440
+        },
+        {
+          "date": "T Apr 28",
+          "dateISO": "2026-04-28",
+          "price": 1435
+        },
+        {
+          "date": "M Apr 27",
+          "dateISO": "2026-04-27",
+          "price": 1440
+        },
+        {
+          "date": "F Apr 24",
+          "dateISO": "2026-04-24",
+          "price": 1418.5
+        }
+      ]
+    }
+  },
+  "updatedAt": "2026-05-10T12:54:21.160Z"
+}

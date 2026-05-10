@@ -11,7 +11,7 @@ const PRODUCT_COLORS: Record<string, string> = { "IFO 380": "#f97316", "VLSFO": 
 const CRUDE_COLORS:   Record<string, string> = { "WTI": "#facc15", "Brent": "#c084fc", "Dubai": "#fb7185" };
 const PRODUCTS = ["IFO 380", "VLSFO", "LS MGO"] as const;
 const CRUDES   = ["WTI", "Brent", "Dubai"] as const;
-const PORTS    = ["Singapore", "Hong Kong", "Korea", "Shanghai"] as const;
+const PORTS    = ["Singapore", "Fujairah", "Rotterdam", "Hong Kong", "LA/Long Beach"] as const;
 
 type Product = typeof PRODUCTS[number];
 type Crude   = typeof CRUDES[number];
@@ -70,11 +70,16 @@ const generateInitialHistory = (): HistoryEntry[] => {
   });
 };
 
-const initialPortData: Record<Port, Record<Product, number>> = {
-  Singapore:   { "IFO 380": 418, "VLSFO": 541, "LS MGO": 712 },
-  "Hong Kong": { "IFO 380": 422, "VLSFO": 548, "LS MGO": 718 },
-  Korea:       { "IFO 380": 415, "VLSFO": 537, "LS MGO": 708 },
-  Shanghai:    { "IFO 380": 420, "VLSFO": 543, "LS MGO": 715 },
+type PortPrices = Record<Product, number | null>;
+
+const emptyPortPrices = (): PortPrices => ({ "IFO 380": null, "VLSFO": null, "LS MGO": null });
+
+const initialPortData: Record<Port, PortPrices> = {
+  Singapore:       emptyPortPrices(),
+  Fujairah:        emptyPortPrices(),
+  Rotterdam:       emptyPortPrices(),
+  "Hong Kong":     emptyPortPrices(),
+  "LA/Long Beach": emptyPortPrices(),
 };
 
 const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ name: string; value: number; color: string }>; label?: string }) => {
@@ -101,7 +106,8 @@ export default function BunkerDashboard() {
   const [crudeHistory, setCrudeHistory]   = useState<HistoryEntry[]>([]);
   const [crudeLoading, setCrudeLoading]   = useState(true);
   const [bunkerHistory, setBunkerHistory] = useState<HistoryEntry[]>(() => generateInitialHistory());
-  const [portData, setPortData]           = useState<Record<Port, Record<Product, number>>>(initialPortData);
+  const [portData, setPortData]           = useState<Record<Port, PortPrices>>(initialPortData);
+  const [sbPortLatest, setSbPortLatest]   = useState<Record<string, PortPrices>>({});
   const [showInput, setShowInput]         = useState(false);
   const [activePort, setActivePort]       = useState<Port>("Singapore");
   const [inputTab, setInputTab]           = useState<"today" | "port">("today");
@@ -115,10 +121,11 @@ export default function BunkerDashboard() {
 
   const [formValues, setFormValues] = useState<Record<Product, string>>({ "IFO 380": "", "VLSFO": "", "LS MGO": "" });
   const [portForm, setPortForm] = useState<Record<Port, Record<Product, string>>>({
-    Singapore:   { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
-    "Hong Kong": { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
-    Korea:       { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
-    Shanghai:    { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
+    Singapore:       { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
+    Fujairah:        { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
+    Rotterdam:       { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
+    "Hong Kong":     { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
+    "LA/Long Beach": { "IFO 380": "", "VLSFO": "", "LS MGO": "" },
   });
 
   useEffect(() => {
@@ -127,62 +134,26 @@ export default function BunkerDashboard() {
       .catch(() => setUsdkrw("1,370"));
   }, []);
 
+  const [dubaiSource, setDubaiSource] = useState<string>("");
+
   useEffect(() => {
-    const fetchYahoo = async (ticker: string) => {
-      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1y`;
-      const res  = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-      const json = await res.json() as { contents: string };
-      return JSON.parse(json.contents);
-    };
-
-    const fetchDubai = async (): Promise<number | null> => {
-      // MCO=F: ICE Murban Crude Futures (ADNOC 벤치마크, 두바이 원유와 거의 동일 추이)
-      // AGA=F: 2차 fallback
-      for (const ticker of ["MCO=F", "AGA=F"]) {
-        try {
-          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`;
-          const res  = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-          const json = await res.json() as { contents: string };
-          const data = JSON.parse(json.contents);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const closes: number[] = (data as any)?.chart?.result?.[0]?.indicators?.quote?.[0]?.close ?? [];
-          const latest = closes.filter(Boolean).at(-1);
-          if (latest && latest > 30) return +latest.toFixed(2);
-        } catch { /* 다음 ticker 시도 */ }
-      }
-      return null;
-    };
-
-    Promise.all([fetchYahoo("CL=F"), fetchYahoo("BZ=F"), fetchDubai()])
-      .then(([wtiData, brentData, dubaiNow]) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const wR = (wtiData as any)?.chart?.result?.[0];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const bR = (brentData as any)?.chart?.result?.[0];
-        const wC: number[] = wR?.indicators?.quote?.[0]?.close ?? [];
-        const bC: number[] = bR?.indicators?.quote?.[0]?.close ?? [];
-        const ts: number[] = wR?.timestamp ?? [];
-        const wN = wC.filter(Boolean).at(-1);
-        const bN = bC.filter(Boolean).at(-1);
-        setCrudePrice({ WTI: wN ? +wN.toFixed(2) : null, Brent: bN ? +bN.toFixed(2) : null, Dubai: dubaiNow });
-        setCrudeHistory(ts.map((t, i) => {
-          const d  = new Date(t * 1000);
-          const w  = wC[i] ? +wC[i].toFixed(2) : null;
-          const b  = bC[i] ? +bC[i].toFixed(2) : null;
-          return { date: `${d.getMonth() + 1}/${d.getDate()}`, fullDate: d.toISOString().slice(0, 10), WTI: w, Brent: b, Dubai: null };
-        }).filter(d => d.WTI));
-        setCrudeLoading(false);
+    fetch("/api/crude-prices?range=1y")
+      .then(r => r.json())
+      .then((json: { latest: Record<Crude, number | null>; history: HistoryEntry[]; dubaiSource?: string }) => {
+        setCrudePrice(json.latest);
+        setCrudeHistory(json.history);
+        if (json.dubaiSource) setDubaiSource(json.dubaiSource);
       })
       .catch(() => {
-        const base: Record<string, number> = { WTI: 97.5, Brent: 96.3 };
+        const base: Record<string, number> = { WTI: 78, Brent: 82 };
         setCrudeHistory(Array.from({ length: 30 }, (_, i) => {
           const d = new Date(); d.setDate(d.getDate() - (29 - i));
           ["WTI", "Brent"].forEach(c => { base[c] += (Math.random() - 0.5) * 1.5; });
           return { date: `${d.getMonth() + 1}/${d.getDate()}`, fullDate: d.toISOString().slice(0, 10), WTI: +base.WTI.toFixed(2), Brent: +base.Brent.toFixed(2), Dubai: null };
         }));
         setCrudePrice({ WTI: +base.WTI.toFixed(2), Brent: +base.Brent.toFixed(2), Dubai: null });
-        setCrudeLoading(false);
-      });
+      })
+      .finally(() => setCrudeLoading(false));
   }, []);
 
   const handleSaveToday = () => {
@@ -198,20 +169,66 @@ export default function BunkerDashboard() {
     const updated = { ...portData };
     PORTS.forEach(port => PRODUCTS.forEach(p => { const v = parseFloat(portForm[port][p]); if (!isNaN(v)) updated[port] = { ...updated[port], [p]: v }; }));
     setPortData(updated);
+
+    // S&B 비교를 위한 Platts 가격 이력 localStorage 저장 (5개 포트 전부)
+    try {
+      const stored = JSON.parse(localStorage.getItem("bb_platts_history") ?? "{}") as Record<string, Record<string, Record<string, number | null>>>;
+      const todayEntry: Record<string, Record<string, number | null>> = { ...(stored[todayISO] ?? {}) };
+      PORTS.forEach(port => {
+        todayEntry[port] = {
+          VLSFO:  updated[port]["VLSFO"],
+          IFO380: updated[port]["IFO 380"],
+          LSMGO:  updated[port]["LS MGO"],
+        };
+      });
+      stored[todayISO] = todayEntry;
+      // 최근 14일치만 보관
+      const keys = Object.keys(stored).sort();
+      if (keys.length > 14) keys.slice(0, keys.length - 14).forEach(k => delete stored[k]);
+      localStorage.setItem("bb_platts_history", JSON.stringify(stored));
+    } catch { /* ignore */ }
+
     setSaved(true); setTimeout(() => { setSaved(false); setShowInput(false); }, 1200);
   };
 
-  // SBComparison에 넘길 myPrices 매핑
-  // 기존 BunkerBoard 포트명과 등급명 → S&B 포트명/등급명 매핑
-  const myPricesForSB = {
-    Singapore:       { VLSFO: portData.Singapore["VLSFO"], IFO380: portData.Singapore["IFO 380"], LSMGO: portData.Singapore["LS MGO"] },
-    Fujairah:        { VLSFO: null, IFO380: null, LSMGO: null }, // 기존 BunkerBoard에 없는 포트
-    Rotterdam:       { VLSFO: null, IFO380: null, LSMGO: null },
-    "Hong Kong":     { VLSFO: portData["Hong Kong"]["VLSFO"], IFO380: portData["Hong Kong"]["IFO 380"], LSMGO: portData["Hong Kong"]["LS MGO"] },
-    "LA/Long Beach": { VLSFO: null, IFO380: null, LSMGO: null },
-  };
+  // S&B 최신가 가져오기 (포트별 비교 차트용) — API는 등급별 history array 반환, [0]이 최신
+  useEffect(() => {
+    type SBEntry = { date: string; dateISO: string; price: number };
+    type SBPortGrades = { VLSFO: SBEntry[]; IFO380: SBEntry[]; LSMGO: SBEntry[] };
+    fetch("/api/sb-prices")
+      .then(r => r.json())
+      .then((json: { ports?: Record<string, SBPortGrades> }) => {
+        if (!json.ports) return;
+        const latest: Record<string, PortPrices> = {};
+        for (const [port, grades] of Object.entries(json.ports)) {
+          latest[port] = {
+            "IFO 380": grades.IFO380?.[0]?.price ?? null,
+            "VLSFO":   grades.VLSFO?.[0]?.price  ?? null,
+            "LS MGO":  grades.LSMGO?.[0]?.price  ?? null,
+          };
+        }
+        setSbPortLatest(latest);
+      })
+      .catch(() => {});
+  }, []);
 
-  const portChartData = PORTS.map(port => ({ port, ...portData[port] }));
+  // SBComparison에 넘길 myPrices 매핑 (사용자 Platts 입력값)
+  const myPricesForSB = PORTS.reduce((acc, port) => {
+    acc[port] = {
+      VLSFO:  portData[port]["VLSFO"],
+      IFO380: portData[port]["IFO 380"],
+      LSMGO:  portData[port]["LS MGO"],
+    };
+    return acc;
+  }, {} as Record<string, { VLSFO: number | null; IFO380: number | null; LSMGO: number | null }>);
+
+  // 포트별 비교 차트는 S&B 최신가 사용
+  const portChartData = PORTS.map(port => ({
+    port,
+    "IFO 380": sbPortLatest[port]?.["IFO 380"] ?? null,
+    "VLSFO":   sbPortLatest[port]?.["VLSFO"]   ?? null,
+    "LS MGO":  sbPortLatest[port]?.["LS MGO"]  ?? null,
+  }));
   const latest = bunkerHistory.at(-1);
   const prev   = bunkerHistory.at(-2);
   const getDelta = (p: Product) => { if (!latest?.[p] || !prev?.[p]) return { text: "—", up: true }; const d = (latest[p] as number) - (prev[p] as number); return { text: d > 0 ? `▲ ${d.toFixed(1)}` : `▼ ${Math.abs(d).toFixed(1)}`, up: d > 0 }; };
@@ -260,7 +277,7 @@ export default function BunkerDashboard() {
                 <label style={{ fontSize: 12, color: PRODUCT_COLORS[p], display: "block", marginBottom: 6, fontWeight: 600 }}>{p}</label>
                 <div style={{ position: "relative" }}>
                   <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#475569" }}>$</span>
-                  <input type="number" placeholder={`현재: ${portData[activePort]?.[p] ?? "—"}`} value={portForm[activePort][p]}
+                  <input type="number" placeholder={sbPortLatest[activePort]?.[p] ? `S&B: $${sbPortLatest[activePort]?.[p]}` : (portData[activePort]?.[p] ? `이전: $${portData[activePort]?.[p]}` : "Platts 가격 입력")} value={portForm[activePort][p]}
                     onChange={e => setPortForm(prev => ({ ...prev, [activePort]: { ...prev[activePort], [p]: e.target.value } }))}
                     style={{ width: "100%", boxSizing: "border-box", background: "#060e1a", border: `1px solid ${PRODUCT_COLORS[p]}44`, borderRadius: 8, padding: "10px 12px 10px 28px", color: "#f8fafc", fontSize: 15, fontFamily: "monospace", outline: "none" }} />
                 </div>
@@ -334,7 +351,7 @@ export default function BunkerDashboard() {
           {delta.text} <span style={{ color: "#475569" }}>vs 전일</span>
         </div>
         {c === "Dubai" && <div style={{ fontSize: 10, color: "#334155", marginTop: 3 }}>
-          {crudePrice[c] ? "※ ICE Murban (MCO=F)" : "※ 로딩 실패"}
+          {crudePrice[c] ? `※ ${dubaiSource || "Murban proxy"}` : "※ 로딩 실패"}
         </div>}
       </Card>
     );
@@ -440,17 +457,17 @@ export default function BunkerDashboard() {
         </ResponsiveContainer>
       </Card>
 
-      {/* 포트별 벙커유 비교 */}
+      {/* 포트별 벙커유 비교 (S&B 최신가) */}
       <Card>
         <div style={{ marginBottom: 16 }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: "#f8fafc" }}>포트별 벙커유 비교</div>
-          <div style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>최신 기준 — USD/MT</div>
+          <div style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>Ship &amp; Bunker 최신가 · USD/MT</div>
         </div>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={portChartData} barGap={4}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" vertical={false} />
-            <XAxis dataKey="port" tick={{ fontSize: 10, fill: "#94a3b8" }} tickLine={false} axisLine={false} />
-            <YAxis tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} domain={[380, "auto"]} width={40} />
+            <XAxis dataKey="port" tick={{ fontSize: 9, fill: "#94a3b8" }} tickLine={false} axisLine={false} interval={0} />
+            <YAxis tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} domain={["auto", "auto"]} width={40} />
             <Tooltip content={<CustomTooltip />} />
             <Legend wrapperStyle={{ fontSize: 10, color: "#94a3b8", paddingTop: 10 }} />
             {PRODUCTS.map(p => <Bar key={p} dataKey={p} fill={PRODUCT_COLORS[p]} radius={[4, 4, 0, 0]} opacity={0.85} />)}

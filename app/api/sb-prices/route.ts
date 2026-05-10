@@ -21,34 +21,54 @@ function extractPrice(text: string): number | null {
   return v > 50 && v < 5000 ? v : null;
 }
 
-// 2026-05 기준 selector:
-// S&B 페이지는 등급별로 h3 "Latest Prices, X" 헤딩 + 바로 뒤 table 구조.
-// 테이블 행: th(날짜) | td(가격) | td(변동) | td(고) | td(저) | td(스프레드)
-// → 첫 번째 데이터 행의 첫 번째 td가 현재가격.
-function parsePrices(html: string): Record<string, number | null> {
+function parseDateISO(dateStr: string): string | null {
+  // "May 9, 2025" or "May 9" → "2025-05-09"
+  const withYear = dateStr.includes(",")
+    ? dateStr
+    : `${dateStr}, ${new Date().getFullYear()}`;
+  const d = new Date(withYear);
+  if (isNaN(d.getTime())) return null;
+  return d.toISOString().slice(0, 10);
+}
+
+export interface SBEntry {
+  date: string;
+  dateISO: string;
+  price: number;
+}
+
+type GradeKey = "VLSFO" | "IFO380" | "LSMGO";
+
+// Table row structure per S&B page:
+// th(날짜) | td(가격) | td(변동) | td(고) | td(저) | td(스프레드)
+function parsePortData(html: string): Record<GradeKey, SBEntry[]> {
   const $ = cheerio.load(html);
-  const result: Record<string, number | null> = { VLSFO: null, IFO380: null, LSMGO: null };
+  const result: Record<GradeKey, SBEntry[]> = { VLSFO: [], IFO380: [], LSMGO: [] };
 
   $("h3").each((_, h3el) => {
     const heading = $(h3el).text().trim();
     if (!heading.startsWith("Latest Prices")) return;
 
-    // 등급 판별
-    let grade: string | null = null;
-    if (/VLSFO/i.test(heading))         grade = "VLSFO";
+    let grade: GradeKey | null = null;
+    if (/VLSFO/i.test(heading))               grade = "VLSFO";
     else if (/IFO380|IFO 380/i.test(heading)) grade = "IFO380";
     else if (/LSMGO|LS MGO/i.test(heading))   grade = "LSMGO";
-    if (!grade || result[grade] !== null) return;
+    if (!grade || result[grade].length > 0) return;
 
-    // h3 이후 첫 번째 <table> 형제 탐색
     let sib = $(h3el).next();
     for (let i = 0; i < 6; i++) {
       if (!sib.length) break;
       if (sib.is("table")) {
-        // 첫 번째 데이터 행(header 다음 행)의 첫 td = 가격
-        const firstTd = sib.find("tr").eq(1).find("td").first().text().trim();
-        const price = extractPrice(firstTd);
-        if (price !== null) result[grade] = price;
+        // Parse all data rows (skip header row at index 0). S&B 페이지는 보통 ~11일치 제공.
+        sib.find("tr").slice(1).each((_, tr) => {
+          const dateText = $(tr).find("th").first().text().trim();
+          const priceText = $(tr).find("td").first().text().trim();
+          const price = extractPrice(priceText);
+          const dateISO = parseDateISO(dateText);
+          if (price !== null && dateISO) {
+            result[grade!].push({ date: dateText, dateISO, price });
+          }
+        });
         return;
       }
       sib = sib.next();
@@ -58,8 +78,12 @@ function parsePrices(html: string): Record<string, number | null> {
   return result;
 }
 
-async function fetchPort(portName: string, url: string, noStore: boolean): Promise<{ portName: string; prices: Record<string, number | null>; error?: string }> {
-  const NULL_PRICES = { VLSFO: null, IFO380: null, LSMGO: null };
+async function fetchPort(
+  portName: string,
+  url: string,
+  noStore: boolean
+): Promise<{ portName: string; grades: Record<GradeKey, SBEntry[]>; error?: string }> {
+  const EMPTY: Record<GradeKey, SBEntry[]> = { VLSFO: [], IFO380: [], LSMGO: [] };
   try {
     let res = await fetch(url, {
       headers: { "User-Agent": UA, Accept: "text/html" },
@@ -75,7 +99,10 @@ async function fetchPort(portName: string, url: string, noStore: boolean): Promi
         let found = "";
         $$("a[href*='/prices/']").each((_, a) => {
           const href = $$(a).attr("href") ?? "";
-          if (href.toLowerCase().replace(/[\s/-]/g, "").includes(needle)) { found = href; return false; }
+          if (href.toLowerCase().replace(/[\s/-]/g, "").includes(needle)) {
+            found = href;
+            return false;
+          }
         });
         if (found) {
           const fullUrl = found.startsWith("http") ? found : `https://shipandbunker.com${found}`;
@@ -84,10 +111,10 @@ async function fetchPort(portName: string, url: string, noStore: boolean): Promi
       }
     }
 
-    if (!res.ok) return { portName, prices: NULL_PRICES, error: `HTTP ${res.status}` };
-    return { portName, prices: parsePrices(await res.text()) };
+    if (!res.ok) return { portName, grades: EMPTY, error: `HTTP ${res.status}` };
+    return { portName, grades: parsePortData(await res.text()) };
   } catch (e) {
-    return { portName, prices: NULL_PRICES, error: String(e) };
+    return { portName, grades: EMPTY, error: String(e) };
   }
 }
 
@@ -98,10 +125,10 @@ export async function GET(request: Request) {
       Object.entries(PORTS).map(([name, url]) => fetchPort(name, url, noStore))
     );
 
-    const ports: Record<string, Record<string, number | null>> = {};
+    const ports: Record<string, Record<GradeKey, SBEntry[]>> = {};
     const errors: string[] = [];
-    for (const { portName, prices, error } of results) {
-      ports[portName] = prices;
+    for (const { portName, grades, error } of results) {
+      ports[portName] = grades;
       if (error) errors.push(`${portName}: ${error}`);
     }
 
