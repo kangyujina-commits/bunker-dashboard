@@ -168,6 +168,14 @@ export default function BunkerDashboard() {
   const [crudeRange, setCrudeRange]             = useState(30);
   const [maMode, setMaMode]                     = useState<"off" | "20" | "50">("off");
   const [forwardCurve, setForwardCurve]         = useState<{ curve: Array<{ mLabel: string; shortLabel: string; price: number }>; structure: string | null; m1ToLastSpread: number | null } | null>(null);
+  const [showScrollTop, setShowScrollTop]       = useState(false);
+
+  // 스크롤 400px 이상 내려가면 맨 위로 버튼 표시
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const today    = new Date();
   const todayStr = `${today.getMonth() + 1}/${today.getDate()}`;
@@ -650,6 +658,38 @@ export default function BunkerDashboard() {
       <div style={{ padding: "16px 20px 0", fontSize: 10, color: "#334155", textAlign: "center" }}>
         원유: Yahoo Finance 실시간 · 환율: ExchangeRate-API · S&B 가격: 1시간 캐시 · 뉴스: 링크 모음
       </div>
+
+      {/* 맨 위로 스크롤 버튼 (400px 이상 스크롤 시 표시) */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="맨 위로"
+        style={{
+          position: "fixed",
+          bottom: 24,
+          right: 20,
+          width: 48,
+          height: 48,
+          borderRadius: 24,
+          border: "1px solid #1e3a5f",
+          background: "linear-gradient(135deg,#0f2744,#0a1628)",
+          color: "#f8fafc",
+          fontSize: 20,
+          fontWeight: 700,
+          cursor: "pointer",
+          fontFamily: "inherit",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(56,189,248,0.15)",
+          opacity: showScrollTop ? 1 : 0,
+          pointerEvents: showScrollTop ? "auto" : "none",
+          transform: showScrollTop ? "translateY(0)" : "translateY(8px)",
+          transition: "opacity 0.25s, transform 0.25s",
+          zIndex: 50,
+        }}
+      >
+        ↑
+      </button>
     </div>
   );
 }
