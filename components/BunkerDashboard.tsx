@@ -136,14 +136,21 @@ export default function BunkerDashboard() {
     };
 
     const fetchDubai = async (): Promise<number | null> => {
-      try {
-        const url = "https://api.tradingeconomics.com/markets/commodity?c=guest:guest&f=json";
-        const res  = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-        const json = await res.json() as { contents: string };
-        const data = JSON.parse(json.contents) as Array<{ Symbol?: string; Name?: string; Last?: string }>;
-        const dubai = data?.find((d) => d.Symbol === "DUBAI" || d.Name?.toLowerCase().includes("dubai"));
-        return dubai ? +parseFloat(dubai.Last ?? "0").toFixed(2) : null;
-      } catch { return null; }
+      // MCO=F: ICE Murban Crude Futures (ADNOC 벤치마크, 두바이 원유와 거의 동일 추이)
+      // AGA=F: 2차 fallback
+      for (const ticker of ["MCO=F", "AGA=F"]) {
+        try {
+          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`;
+          const res  = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+          const json = await res.json() as { contents: string };
+          const data = JSON.parse(json.contents);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const closes: number[] = (data as any)?.chart?.result?.[0]?.indicators?.quote?.[0]?.close ?? [];
+          const latest = closes.filter(Boolean).at(-1);
+          if (latest && latest > 30) return +latest.toFixed(2);
+        } catch { /* 다음 ticker 시도 */ }
+      }
+      return null;
     };
 
     Promise.all([fetchYahoo("CL=F"), fetchYahoo("BZ=F"), fetchDubai()])
@@ -326,8 +333,8 @@ export default function BunkerDashboard() {
         <div style={{ fontSize: 11, color: delta.up ? "#f97316" : "#38bdf8", marginTop: 6, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           {delta.text} <span style={{ color: "#475569" }}>vs 전일</span>
         </div>
-        {c === "Dubai" && <div style={{ fontSize: 10, color: crudePrice[c] ? "#334155" : "#f97316", marginTop: 3 }}>
-          {crudePrice[c] ? "※ Trading Economics" : "※ 데이터 없음 (차트 미지원)"}
+        {c === "Dubai" && <div style={{ fontSize: 10, color: "#334155", marginTop: 3 }}>
+          {crudePrice[c] ? "※ ICE Murban (MCO=F)" : "※ 로딩 실패"}
         </div>}
       </Card>
     );
