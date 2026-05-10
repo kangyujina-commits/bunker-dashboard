@@ -410,7 +410,7 @@ export default function BunkerDashboard() {
                 <YAxis tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} domain={["auto", "auto"]} width={40} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 10, color: "#94a3b8", paddingTop: 8 }} />
-                {CRUDES.map(c => <Line key={c} type="monotone" dataKey={c} stroke={CRUDE_COLORS[c]} strokeWidth={2} dot={false} />)}
+                {CRUDES.map(c => <Line key={c} type="monotone" dataKey={c} stroke={CRUDE_COLORS[c]} strokeWidth={2} dot={false} connectNulls />)}
               </LineChart>
             </ResponsiveContainer>
         }
