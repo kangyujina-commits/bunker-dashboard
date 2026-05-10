@@ -8,8 +8,16 @@ export async function GET() {
       cache: "no-store",
     });
     const html = await res.text();
-    // 처음 8000자만 반환 (충분히 구조 파악 가능)
-    return NextResponse.json({ status: res.status, snippet: html.slice(0, 8000) });
+    // 가격 관련 섹션만 추출
+    const priceIdx = html.search(/vlsfo|ifo.?380|lsmgo|ls.?mgo|bunker.?price/i);
+    const start = Math.max(0, priceIdx - 200);
+    return NextResponse.json({
+      status: res.status,
+      totalLength: html.length,
+      priceIdx,
+      snippet: html.slice(start, start + 6000),
+      tail: html.slice(-3000),
+    });
   } catch (e) {
     return NextResponse.json({ error: String(e) }, { status: 500 });
   }
