@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-  Legend, ResponsiveContainer, BarChart, Bar,
+  Legend, ResponsiveContainer,
 } from "recharts";
 import SBComparison from "./SBComparison";
 
@@ -222,13 +222,6 @@ export default function BunkerDashboard() {
     return acc;
   }, {} as Record<string, { VLSFO: number | null; IFO380: number | null; LSMGO: number | null }>);
 
-  // 포트별 비교 차트는 S&B 최신가 사용
-  const portChartData = PORTS.map(port => ({
-    port,
-    "IFO 380": sbPortLatest[port]?.["IFO 380"] ?? null,
-    "VLSFO":   sbPortLatest[port]?.["VLSFO"]   ?? null,
-    "LS MGO":  sbPortLatest[port]?.["LS MGO"]  ?? null,
-  }));
   const latest = bunkerHistory.at(-1);
   const prev   = bunkerHistory.at(-2);
   const getDelta = (p: Product) => { if (!latest?.[p] || !prev?.[p]) return { text: "—", up: true }; const d = (latest[p] as number) - (prev[p] as number); return { text: d > 0 ? `▲ ${d.toFixed(1)}` : `▼ ${Math.abs(d).toFixed(1)}`, up: d > 0 }; };
@@ -457,25 +450,7 @@ export default function BunkerDashboard() {
         </ResponsiveContainer>
       </Card>
 
-      {/* 포트별 벙커유 비교 (S&B 최신가) */}
-      <Card>
-        <div style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: "#f8fafc" }}>포트별 벙커유 비교</div>
-          <div style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>Ship &amp; Bunker 최신가 · USD/MT</div>
-        </div>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={portChartData} barGap={4}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" vertical={false} />
-            <XAxis dataKey="port" tick={{ fontSize: 9, fill: "#94a3b8" }} tickLine={false} axisLine={false} interval={0} />
-            <YAxis tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} domain={["auto", "auto"]} width={40} />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 10, color: "#94a3b8", paddingTop: 10 }} />
-            {PRODUCTS.map(p => <Bar key={p} dataKey={p} fill={PRODUCT_COLORS[p]} radius={[4, 4, 0, 0]} opacity={0.85} />)}
-          </BarChart>
-        </ResponsiveContainer>
-      </Card>
-
-      {/* Platts vs S&B 비교 — 포트별 벙커유 비교 바로 아래 */}
+      {/* Platts vs S&B 비교 (5개 포트 × 3유종 데이터 모두 포함) */}
       <SBComparison myPrices={myPricesForSB} />
     </div>
   );
