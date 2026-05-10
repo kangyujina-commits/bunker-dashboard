@@ -382,7 +382,21 @@ export default function BunkerDashboard() {
           : <ResponsiveContainer width="100%" height={200}>
               <LineChart data={crudeHistory.slice(-crudeRange)}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
-                <XAxis dataKey="date" tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} interval={crudeRange === 30 ? 4 : 30} />
+                <XAxis
+                  dataKey="date"
+                  tick={{ fontSize: 9, fill: "#475569" }}
+                  tickLine={false}
+                  axisLine={false}
+                  interval={crudeRange === 30 ? 2 : 20}
+                  tickFormatter={(value: string) => {
+                    if (crudeRange === 365) {
+                      const [m, d] = value.split("/").map(Number);
+                      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+                      return d <= 7 ? (months[m - 1] ?? value) : "";
+                    }
+                    return value;
+                  }}
+                />
                 <YAxis tick={{ fontSize: 9, fill: "#475569" }} tickLine={false} axisLine={false} domain={["auto", "auto"]} width={40} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 10, color: "#94a3b8", paddingTop: 8 }} />
