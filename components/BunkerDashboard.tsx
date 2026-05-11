@@ -177,6 +177,44 @@ export default function BunkerDashboard() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // platts-prices.json에서 최신 Platts 가격 자동 로드
+  useEffect(() => {
+    fetch("/platts-prices.json")
+      .then(r => r.json())
+      .then((json: { updatedAt: string; latest: Record<string, Record<string, number>>; history: Record<string, Record<string, Record<string, number>>> }) => {
+        if (json.latest) {
+          const updated = { ...initialPortData };
+          for (const [port, fuels] of Object.entries(json.latest)) {
+            if (port in updated) {
+              updated[port as Port] = {
+                "IFO 380": fuels["IFO380"] ?? null,
+                "VLSFO":   fuels["VLSFO"]  ?? null,
+                "LS MGO":  fuels["LSMGO"]  ?? null,
+              };
+            }
+          }
+          setPortData(updated);
+        }
+        if (json.history) {
+          try {
+            const stored = JSON.parse(localStorage.getItem("bb_platts_history") ?? "{}");
+            for (const [dateISO, ports] of Object.entries(json.history)) {
+              stored[dateISO] = stored[dateISO] ?? {};
+              for (const [port, fuels] of Object.entries(ports as Record<string, Record<string, number>>)) {
+                stored[dateISO][port] = {
+                  VLSFO:  (fuels as Record<string, number>)["VLSFO"]  ?? null,
+                  IFO380: (fuels as Record<string, number>)["IFO380"] ?? null,
+                  LSMGO:  (fuels as Record<string, number>)["LSMGO"]  ?? null,
+                };
+              }
+            }
+            localStorage.setItem("bb_platts_history", JSON.stringify(stored));
+          } catch { /* ignore */ }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const today    = new Date();
   const todayStr = `${today.getMonth() + 1}/${today.getDate()}`;
   const todayISO = today.toISOString().slice(0, 10);
