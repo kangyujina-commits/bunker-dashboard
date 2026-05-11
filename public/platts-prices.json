@@ -1,5 +1,757 @@
 {
-  "updatedAt": "",
-  "latest": {},
-  "history": {}
+  "updatedAt": "2026-05-08",
+  "latest": {
+    "Singapore": {
+      "IFO380": 662.0,
+      "VLSFO": 774.0,
+      "LSMGO": 1145.0
+    },
+    "Hong Kong": {
+      "IFO380": 690.0,
+      "VLSFO": 785.0,
+      "LSMGO": 1145.0
+    },
+    "Fujairah": {
+      "VLSFO": 860.0,
+      "LSMGO": 1465.0
+    },
+    "LA/Long Beach": {
+      "VLSFO": 1055.0
+    },
+    "Rotterdam": {
+      "VLSFO": 805.0
+    }
+  },
+  "history": {
+    "2026-01-28": {
+      "Singapore": {
+        "IFO380": 412.0,
+        "VLSFO": 476.0,
+        "LSMGO": 664.5
+      },
+      "Hong Kong": {
+        "IFO380": 435.0,
+        "VLSFO": 475.0,
+        "LSMGO": 675.0
+      }
+    },
+    "2026-01-29": {
+      "Singapore": {
+        "IFO380": 426.0,
+        "VLSFO": 485.0,
+        "LSMGO": 674.5
+      },
+      "Hong Kong": {
+        "IFO380": 470.0,
+        "VLSFO": 493.0,
+        "LSMGO": 695.5
+      }
+    },
+    "2026-01-30": {
+      "Singapore": {
+        "IFO380": 425.0,
+        "VLSFO": 482.0,
+        "LSMGO": 681.25
+      },
+      "Hong Kong": {
+        "IFO380": 470.0,
+        "VLSFO": 488.0,
+        "LSMGO": 693.0
+      }
+    },
+    "2026-02-13": {
+      "Singapore": {
+        "IFO380": 870.0,
+        "VLSFO": 1133.0,
+        "LSMGO": 1940.0
+      },
+      "Hong Kong": {
+        "IFO380": 899.0,
+        "VLSFO": 1065.0,
+        "LSMGO": 1586.25
+      }
+    },
+    "2026-02-18": {
+      "Singapore": {
+        "IFO380": 775.0,
+        "VLSFO": 990.0,
+        "LSMGO": 1760.0
+      },
+      "Hong Kong": {
+        "IFO380": 840.0,
+        "VLSFO": 1030.0,
+        "LSMGO": 1465.0
+      }
+    },
+    "2026-02-19": {
+      "Singapore": {
+        "IFO380": 815.0,
+        "VLSFO": 1050.0,
+        "LSMGO": 1870.0
+      },
+      "Hong Kong": {
+        "IFO380": 845.0,
+        "VLSFO": 1097.0,
+        "LSMGO": 1600.0
+      }
+    },
+    "2026-02-20": {
+      "Singapore": {
+        "IFO380": 765.0,
+        "VLSFO": 957.0,
+        "LSMGO": 1875.75
+      },
+      "Hong Kong": {
+        "IFO380": 800.0,
+        "VLSFO": 1030.0,
+        "LSMGO": 1560.0
+      }
+    },
+    "2026-02-23": {
+      "Singapore": {
+        "IFO380": 795.0,
+        "VLSFO": 975.0,
+        "LSMGO": 1947.75
+      },
+      "Hong Kong": {
+        "IFO380": 862.0,
+        "VLSFO": 1025.0,
+        "LSMGO": 1580.0
+      }
+    },
+    "2026-02-24": {
+      "Singapore": {
+        "IFO380": 692.0,
+        "VLSFO": 866.0,
+        "LSMGO": 1742.0
+      },
+      "Hong Kong": {
+        "IFO380": 770.0,
+        "VLSFO": 950.0,
+        "LSMGO": 1380.0
+      }
+    },
+    "2026-02-25": {
+      "Singapore": {
+        "IFO380": 640.0,
+        "VLSFO": 805.0,
+        "LSMGO": 1642.5
+      },
+      "Hong Kong": {
+        "IFO380": 680.0,
+        "VLSFO": 880.0,
+        "LSMGO": 1289.25
+      }
+    },
+    "2026-02-26": {
+      "Singapore": {
+        "IFO380": 661.0,
+        "VLSFO": 812.0,
+        "LSMGO": 1622.75
+      },
+      "Hong Kong": {
+        "IFO380": 714.0,
+        "VLSFO": 905.0,
+        "LSMGO": 1350.0
+      }
+    },
+    "2026-02-27": {
+      "Singapore": {
+        "IFO380": 720.0,
+        "VLSFO": 855.0,
+        "LSMGO": 1750.0
+      },
+      "Hong Kong": {
+        "IFO380": 769.5,
+        "VLSFO": 895.0,
+        "LSMGO": 1460.0
+      }
+    },
+    "2026-03-02": {
+      "Singapore": {
+        "IFO380": 512.0,
+        "VLSFO": 578.0,
+        "LSMGO": 855.0
+      },
+      "Hong Kong": {
+        "IFO380": 533.0,
+        "VLSFO": 584.0,
+        "LSMGO": 866.5
+      }
+    },
+    "2026-03-03": {
+      "Singapore": {
+        "IFO380": 550.0,
+        "VLSFO": 628.0,
+        "LSMGO": 945.0
+      },
+      "Hong Kong": {
+        "IFO380": 556.0,
+        "VLSFO": 625.0,
+        "LSMGO": 967.5
+      }
+    },
+    "2026-03-04": {
+      "Singapore": {
+        "IFO380": 592.0,
+        "VLSFO": 655.0,
+        "LSMGO": 1085.0
+      },
+      "Hong Kong": {
+        "IFO380": 625.0,
+        "VLSFO": 673.0,
+        "LSMGO": 1085.5
+      }
+    },
+    "2026-03-05": {
+      "Singapore": {
+        "IFO380": 627.0,
+        "VLSFO": 693.0,
+        "LSMGO": 1225.0
+      },
+      "Hong Kong": {
+        "IFO380": 650.0,
+        "VLSFO": 693.0,
+        "LSMGO": 1150.0
+      }
+    },
+    "2026-03-06": {
+      "Singapore": {
+        "IFO380": 700.0,
+        "VLSFO": 825.0,
+        "LSMGO": 1350.0
+      },
+      "Hong Kong": {
+        "IFO380": 710.0,
+        "VLSFO": 810.0,
+        "LSMGO": 1200.0
+      }
+    },
+    "2026-03-09": {
+      "Singapore": {
+        "IFO380": 1090.0,
+        "VLSFO": 1200.0,
+        "LSMGO": 1850.0
+      },
+      "Hong Kong": {
+        "IFO380": 1000.0,
+        "VLSFO": 1150.0,
+        "LSMGO": 1457.5
+      }
+    },
+    "2026-03-10": {
+      "Singapore": {
+        "IFO380": 910.0,
+        "VLSFO": 1050.0,
+        "LSMGO": 1690.0
+      },
+      "Hong Kong": {
+        "IFO380": 900.0,
+        "VLSFO": 1040.0,
+        "LSMGO": 1312.0
+      }
+    },
+    "2026-03-11": {
+      "Singapore": {
+        "IFO380": 890.0,
+        "VLSFO": 1050.0,
+        "LSMGO": 1720.0
+      },
+      "Hong Kong": {
+        "IFO380": 882.75,
+        "VLSFO": 1020.0,
+        "LSMGO": 1366.5
+      }
+    },
+    "2026-03-12": {
+      "Singapore": {
+        "IFO380": 970.0,
+        "VLSFO": 1138.0,
+        "LSMGO": 1995.5
+      },
+      "Hong Kong": {
+        "IFO380": 940.0,
+        "VLSFO": 1111.0,
+        "LSMGO": 1630.25
+      }
+    },
+    "2026-03-13": {
+      "Singapore": {
+        "IFO380": 870.0,
+        "VLSFO": 1133.0,
+        "LSMGO": 1940.0
+      },
+      "Hong Kong": {
+        "IFO380": 899.0,
+        "VLSFO": 1065.0,
+        "LSMGO": 1586.25
+      }
+    },
+    "2026-03-16": {
+      "Singapore": {
+        "IFO380": 840.0,
+        "VLSFO": 1100.0,
+        "LSMGO": 1800.0
+      },
+      "Hong Kong": {
+        "IFO380": 895.0,
+        "VLSFO": 1055.0,
+        "LSMGO": 1530.0
+      }
+    },
+    "2026-03-17": {
+      "Singapore": {
+        "IFO380": 795.0,
+        "VLSFO": 1000.0,
+        "LSMGO": 1750.0
+      },
+      "Hong Kong": {
+        "IFO380": 901.5,
+        "VLSFO": 1030.0,
+        "LSMGO": 1500.0
+      }
+    },
+    "2026-03-18": {
+      "Singapore": {
+        "IFO380": 775.0,
+        "VLSFO": 990.0,
+        "LSMGO": 1760.0
+      },
+      "Hong Kong": {
+        "IFO380": 840.0,
+        "VLSFO": 1030.0,
+        "LSMGO": 1465.0
+      }
+    },
+    "2026-03-19": {
+      "Singapore": {
+        "IFO380": 815.0,
+        "VLSFO": 1050.0,
+        "LSMGO": 1870.0
+      },
+      "Hong Kong": {
+        "IFO380": 845.0,
+        "VLSFO": 1097.0,
+        "LSMGO": 1600.0
+      }
+    },
+    "2026-03-20": {
+      "Singapore": {
+        "IFO380": 765.0,
+        "VLSFO": 957.0,
+        "LSMGO": 1875.75
+      },
+      "Hong Kong": {
+        "IFO380": 800.0,
+        "VLSFO": 1030.0,
+        "LSMGO": 1560.0
+      }
+    },
+    "2026-03-23": {
+      "Singapore": {
+        "IFO380": 795.0,
+        "VLSFO": 975.0,
+        "LSMGO": 1947.75
+      },
+      "Hong Kong": {
+        "IFO380": 862.0,
+        "VLSFO": 1025.0,
+        "LSMGO": 1580.0
+      }
+    },
+    "2026-03-24": {
+      "Singapore": {
+        "IFO380": 692.0,
+        "VLSFO": 866.0,
+        "LSMGO": 1742.0
+      },
+      "Hong Kong": {
+        "IFO380": 770.0,
+        "VLSFO": 950.0,
+        "LSMGO": 1380.0
+      }
+    },
+    "2026-03-25": {
+      "Singapore": {
+        "IFO380": 640.0,
+        "VLSFO": 805.0,
+        "LSMGO": 1642.5
+      },
+      "Hong Kong": {
+        "IFO380": 680.0,
+        "VLSFO": 880.0,
+        "LSMGO": 1289.25
+      }
+    },
+    "2026-03-26": {
+      "Singapore": {
+        "IFO380": 661.0,
+        "VLSFO": 812.0,
+        "LSMGO": 1622.75
+      },
+      "Hong Kong": {
+        "IFO380": 714.0,
+        "VLSFO": 905.0,
+        "LSMGO": 1350.0
+      }
+    },
+    "2026-03-27": {
+      "Singapore": {
+        "IFO380": 720.0,
+        "VLSFO": 855.0,
+        "LSMGO": 1750.0
+      },
+      "Hong Kong": {
+        "IFO380": 769.5,
+        "VLSFO": 895.0,
+        "LSMGO": 1460.0
+      }
+    },
+    "2026-03-30": {
+      "Singapore": {
+        "IFO380": 741.0,
+        "VLSFO": 871.0,
+        "LSMGO": 1895.0
+      },
+      "Hong Kong": {
+        "IFO380": 797.0,
+        "VLSFO": 910.0,
+        "LSMGO": 1530.0
+      }
+    },
+    "2026-03-31": {
+      "Singapore": {
+        "IFO380": 700.0,
+        "VLSFO": 862.0,
+        "LSMGO": 1811.0
+      },
+      "Hong Kong": {
+        "IFO380": 760.0,
+        "VLSFO": 899.0,
+        "LSMGO": 1450.0
+      }
+    },
+    "2026-04-01": {
+      "Singapore": {
+        "IFO380": 670.0,
+        "VLSFO": 858.0,
+        "LSMGO": 1835.0
+      },
+      "Hong Kong": {
+        "IFO380": 728.0,
+        "VLSFO": 870.0,
+        "LSMGO": 1500.0
+      }
+    },
+    "2026-04-02": {
+      "Singapore": {
+        "IFO380": 745.0,
+        "VLSFO": 896.0,
+        "LSMGO": 2100.0
+      },
+      "Hong Kong": {
+        "IFO380": 788.0,
+        "VLSFO": 900.0,
+        "LSMGO": 1750.0
+      }
+    },
+    "2026-04-03": {
+      "Singapore": {
+        "IFO380": 745.0,
+        "VLSFO": 896.0,
+        "LSMGO": 2100.0
+      },
+      "Hong Kong": {
+        "IFO380": 788.0,
+        "VLSFO": 900.0,
+        "LSMGO": 1750.0
+      }
+    },
+    "2026-04-06": {
+      "Singapore": {
+        "IFO380": 740.0,
+        "VLSFO": 878.0,
+        "LSMGO": 2020.0
+      },
+      "Hong Kong": {
+        "IFO380": 787.5,
+        "VLSFO": 890.0,
+        "LSMGO": 1750.0
+      }
+    },
+    "2026-04-07": {
+      "Singapore": {
+        "IFO380": 734.0,
+        "VLSFO": 867.0,
+        "LSMGO": 1929.5
+      },
+      "Hong Kong": {
+        "IFO380": 764.0,
+        "VLSFO": 875.0,
+        "LSMGO": 1700.0
+      }
+    },
+    "2026-04-08": {
+      "Singapore": {
+        "IFO380": 644.0,
+        "VLSFO": 754.0,
+        "LSMGO": 1537.5
+      },
+      "Hong Kong": {
+        "IFO380": 690.0,
+        "VLSFO": 790.0,
+        "LSMGO": 1500.0
+      }
+    },
+    "2026-04-09": {
+      "Singapore": {
+        "IFO380": 652.0,
+        "VLSFO": 764.0,
+        "LSMGO": 1622.25
+      },
+      "Hong Kong": {
+        "IFO380": 688.0,
+        "VLSFO": 780.0,
+        "LSMGO": 1530.0
+      }
+    },
+    "2026-04-10": {
+      "Singapore": {
+        "IFO380": 640.0,
+        "VLSFO": 739.0,
+        "LSMGO": 1620.75
+      },
+      "Hong Kong": {
+        "IFO380": 675.0,
+        "VLSFO": 760.0,
+        "LSMGO": 1530.0
+      }
+    },
+    "2026-04-13": {
+      "Singapore": {
+        "IFO380": 670.0,
+        "VLSFO": 759.0,
+        "LSMGO": 1590.5
+      },
+      "Hong Kong": {
+        "IFO380": 717.5,
+        "VLSFO": 780.0,
+        "LSMGO": 1507.5
+      }
+    },
+    "2026-04-14": {
+      "Singapore": {
+        "IFO380": 666.0,
+        "VLSFO": 736.0,
+        "LSMGO": 1470.0
+      },
+      "Hong Kong": {
+        "IFO380": 700.0,
+        "VLSFO": 771.5,
+        "LSMGO": 1426.0
+      }
+    },
+    "2026-04-15": {
+      "Singapore": {
+        "IFO380": 645.0,
+        "VLSFO": 715.0,
+        "LSMGO": 1389.0
+      },
+      "Hong Kong": {
+        "IFO380": 680.0,
+        "VLSFO": 746.0,
+        "LSMGO": 1360.0
+      }
+    },
+    "2026-04-16": {
+      "Singapore": {
+        "IFO380": 644.0,
+        "VLSFO": 708.0,
+        "LSMGO": 1396.75
+      },
+      "Hong Kong": {
+        "IFO380": 671.0,
+        "VLSFO": 730.0,
+        "LSMGO": 1337.0
+      }
+    },
+    "2026-04-17": {
+      "Singapore": {
+        "IFO380": 639.0,
+        "VLSFO": 700.0,
+        "LSMGO": 1338.25
+      },
+      "Hong Kong": {
+        "IFO380": 669.0,
+        "VLSFO": 730.0,
+        "LSMGO": 1320.0
+      }
+    },
+    "2026-04-20": {
+      "Singapore": {
+        "IFO380": 615.0,
+        "VLSFO": 678.0,
+        "LSMGO": 1211.5
+      },
+      "Hong Kong": {
+        "IFO380": 657.5,
+        "VLSFO": 711.0,
+        "LSMGO": 1206.0
+      }
+    },
+    "2026-04-21": {
+      "Singapore": {
+        "IFO380": 594.0,
+        "VLSFO": 661.0,
+        "LSMGO": 1202.25
+      },
+      "Hong Kong": {
+        "IFO380": 627.0,
+        "VLSFO": 683.0,
+        "LSMGO": 1175.0
+      }
+    },
+    "2026-04-22": {
+      "Singapore": {
+        "IFO380": 631.0,
+        "VLSFO": 703.0,
+        "LSMGO": 1280.5
+      },
+      "Hong Kong": {
+        "IFO380": 670.5,
+        "VLSFO": 705.0,
+        "LSMGO": 1220.0
+      }
+    },
+    "2026-04-23": {
+      "Singapore": {
+        "IFO380": 643.0,
+        "VLSFO": 732.0,
+        "LSMGO": 1290.75
+      },
+      "Hong Kong": {
+        "IFO380": 674.0,
+        "VLSFO": 750.0,
+        "LSMGO": 1250.0
+      }
+    },
+    "2026-04-24": {
+      "Singapore": {
+        "IFO380": 664.0,
+        "VLSFO": 749.0,
+        "LSMGO": 1351.5
+      },
+      "Hong Kong": {
+        "IFO380": 685.0,
+        "VLSFO": 760.0,
+        "LSMGO": 1320.0
+      }
+    },
+    "2026-04-27": {
+      "Singapore": {
+        "IFO380": 664.0,
+        "VLSFO": 748.0,
+        "LSMGO": 1328.5
+      },
+      "Hong Kong": {
+        "IFO380": 698.5,
+        "VLSFO": 763.0,
+        "LSMGO": 1300.0
+      }
+    },
+    "2026-04-28": {
+      "Singapore": {
+        "IFO380": 684.0,
+        "VLSFO": 756.0,
+        "LSMGO": 1244.0
+      },
+      "Hong Kong": {
+        "IFO380": 710.0,
+        "VLSFO": 777.0,
+        "LSMGO": 1245.0
+      }
+    },
+    "2026-04-29": {
+      "Singapore": {
+        "IFO380": 680.0,
+        "VLSFO": 771.0,
+        "LSMGO": 1292.0
+      },
+      "Hong Kong": {
+        "IFO380": 704.0,
+        "VLSFO": 790.0,
+        "LSMGO": 1260.0
+      }
+    },
+    "2026-05-04": {
+      "Singapore": {
+        "IFO380": 689.0,
+        "VLSFO": 807.0,
+        "LSMGO": 1210.0
+      },
+      "Hong Kong": {
+        "IFO380": 714.0,
+        "VLSFO": 906.75,
+        "LSMGO": 1224.0
+      }
+    },
+    "2026-05-05": {
+      "Singapore": {
+        "IFO380": 738.0,
+        "VLSFO": 872.0,
+        "LSMGO": 1220.0
+      },
+      "Hong Kong": {
+        "IFO380": 765.0,
+        "VLSFO": 935.0,
+        "LSMGO": 1240.0
+      }
+    },
+    "2026-05-06": {
+      "Singapore": {
+        "IFO380": 722.0,
+        "VLSFO": 821.0,
+        "LSMGO": 1201.25
+      },
+      "Hong Kong": {
+        "IFO380": 765.0,
+        "VLSFO": 895.0,
+        "LSMGO": 1206.0
+      }
+    },
+    "2026-05-07": {
+      "Singapore": {
+        "IFO380": 675.0,
+        "VLSFO": 769.0,
+        "LSMGO": 1115.0
+      },
+      "Hong Kong": {
+        "IFO380": 706.0,
+        "VLSFO": 815.0,
+        "LSMGO": 1130.0
+      }
+    },
+    "2026-05-08": {
+      "Singapore": {
+        "IFO380": 662.0,
+        "VLSFO": 774.0,
+        "LSMGO": 1145.0
+      },
+      "Hong Kong": {
+        "IFO380": 690.0,
+        "VLSFO": 785.0,
+        "LSMGO": 1145.0
+      },
+      "Fujairah": {
+        "VLSFO": 860.0,
+        "LSMGO": 1465.0
+      },
+      "LA/Long Beach": {
+        "VLSFO": 1055.0
+      },
+      "Rotterdam": {
+        "VLSFO": 805.0
+      }
+    }
+  }
 }
