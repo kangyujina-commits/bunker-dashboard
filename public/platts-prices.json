@@ -1,25 +1,25 @@
 {
-  "updatedAt": "2026-05-08",
+  "updatedAt": "2026-05-13",
   "latest": {
     "Singapore": {
-      "IFO380": 662.0,
-      "VLSFO": 774.0,
-      "LSMGO": 1145.0
+      "IFO380": 675.0,
+      "VLSFO": 826.0,
+      "LSMGO": 1215.0
     },
     "Hong Kong": {
-      "IFO380": 690.0,
-      "VLSFO": 785.0,
-      "LSMGO": 1145.0
+      "IFO380": 700.0,
+      "VLSFO": 855.0,
+      "LSMGO": 1223.0
     },
     "Fujairah": {
-      "VLSFO": 860.0,
-      "LSMGO": 1465.0
+      "VLSFO": 870.0,
+      "LSMGO": 1490.0
     },
     "LA/Long Beach": {
-      "VLSFO": 1055.0
+      "VLSFO": 1071.0
     },
     "Rotterdam": {
-      "VLSFO": 805.0
+      "VLSFO": 765.0
     }
   },
   "history": {
@@ -751,6 +751,52 @@
       },
       "Rotterdam": {
         "VLSFO": 805.0
+      }
+    },
+    "2026-05-11": {
+      "Singapore": {
+        "IFO380": 675.0,
+        "VLSFO": 796.0,
+        "LSMGO": 1175.0
+      },
+      "Hong Kong": {
+        "IFO380": 703.0,
+        "VLSFO": 815.0,
+        "LSMGO": 1159.0
+      }
+    },
+    "2026-05-12": {
+      "Singapore": {
+        "IFO380": 683.0,
+        "VLSFO": 831.0,
+        "LSMGO": 1191.0
+      },
+      "Hong Kong": {
+        "IFO380": 718.5,
+        "VLSFO": 849.0,
+        "LSMGO": 1185.0
+      }
+    },
+    "2026-05-13": {
+      "Singapore": {
+        "IFO380": 675.0,
+        "VLSFO": 826.0,
+        "LSMGO": 1215.0
+      },
+      "Hong Kong": {
+        "IFO380": 700.0,
+        "VLSFO": 855.0,
+        "LSMGO": 1223.0
+      },
+      "Fujairah": {
+        "VLSFO": 870.0,
+        "LSMGO": 1490.0
+      },
+      "LA/Long Beach": {
+        "VLSFO": 1071.0
+      },
+      "Rotterdam": {
+        "VLSFO": 765.0
       }
     }
   }
