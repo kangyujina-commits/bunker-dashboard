@@ -48,7 +48,7 @@ function parseRSS(xml: string, src: Source): NewsItem[] {
       source: src.name,
       color: src.color,
       icon: src.icon,
-      summary: desc ? cheerio.load(desc).text().slice(0, 180).trim() : undefined,
+      summary: desc ? desc.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").slice(0, 180).trim() : undefined,
     });
   });
 
