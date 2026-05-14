@@ -17,42 +17,16 @@ type Product = typeof PRODUCTS[number];
 type Crude   = typeof CRUDES[number];
 type Port    = typeof PORTS[number];
 
-const NEWS_SOURCES = {
-  "Ship & Bunker": {
-    color: "#f97316", icon: "⚓", description: "글로벌 벙커유 시장 전문 미디어",
-    mainUrl: "https://shipandbunker.com/news",
-    sections: [
-      { label: "전체 뉴스",  url: "https://shipandbunker.com/news",                         desc: "최신 벙커유 전체 뉴스" },
-      { label: "가격 뉴스",  url: "https://shipandbunker.com/news/am",                       desc: "아시아-중동 가격 동향" },
-      { label: "Singapore", url: "https://shipandbunker.com/news/apac/sea",                  desc: "싱가포르 시장 뉴스" },
-      { label: "Korea",     url: "https://shipandbunker.com/news/apac/nea/kr",               desc: "한국 시장 뉴스" },
-      { label: "홍콩/중국",  url: "https://shipandbunker.com/news/apac/nea/hk",              desc: "홍콩·중국 시장 뉴스" },
-      { label: "규제/IMO",  url: "https://shipandbunker.com/news/world/regulation",          desc: "IMO 규제 및 환경 이슈" },
-    ],
-  },
-  "Platts / S&P Global": {
-    color: "#38bdf8", icon: "📊", description: "S&P Global 원자재 인사이트",
-    mainUrl: "https://www.spglobal.com/commodityinsights/en/market-insights/topics/marine-bunkers",
-    sections: [
-      { label: "Marine Bunkers",    url: "https://www.spglobal.com/commodityinsights/en/market-insights/topics/marine-bunkers",       desc: "Platts 벙커 마켓 인사이트" },
-      { label: "Oil News",          url: "https://www.spglobal.com/commodityinsights/en/market-insights/latest-news/oil",             desc: "원유 시장 최신 뉴스" },
-      { label: "LNG/Shipping",      url: "https://www.spglobal.com/commodityinsights/en/market-insights/topics/lng",                  desc: "LNG 및 해운 뉴스" },
-      { label: "Price Assessments", url: "https://www.spglobal.com/commodityinsights/en/our-methodology/price-assessments",           desc: "Platts 가격 평가 방법론" },
-    ],
-  },
-  "기타 참고 사이트": {
-    color: "#a3e635", icon: "🌐", description: "에너지·해운 관련 주요 미디어",
-    mainUrl: "https://gcaptain.com",
-    sections: [
-      { label: "gCaptain",         url: "https://gcaptain.com",                              desc: "해운·해양 산업 뉴스" },
-      { label: "Hellenic Shipping", url: "https://www.hellenicshippingnews.com",             desc: "글로벌 해운 뉴스" },
-      { label: "TradeWinds",       url: "https://www.tradewindsnews.com",                    desc: "해운 비즈니스 전문지" },
-      { label: "Bunkerworld",      url: "https://www.bunkerworld.com",                       desc: "벙커유 가격 및 뉴스" },
-      { label: "EIA Oil",          url: "https://www.eia.gov/petroleum/",                    desc: "미국 에너지정보청 원유 데이터" },
-      { label: "OPEC News",        url: "https://www.opec.org/opec_web/en/press_room/",      desc: "OPEC 공식 보도자료" },
-    ],
-  },
-};
+interface NewsItem {
+  title: string;
+  link: string;
+  pubDate: string;
+  source: string;
+  color: string;
+  icon: string;
+  summary?: string;
+}
+interface NewsSource { name: string; color: string; icon: string; }
 
 interface HistoryEntry {
   date: string;
@@ -164,7 +138,11 @@ export default function BunkerDashboard() {
   const [activePort, setActivePort]       = useState<Port>("Singapore");
   const [inputTab, setInputTab]           = useState<"today" | "port">("today");
   const [saved, setSaved]                 = useState(false);
-  const [activeNewsSource, setActiveNewsSource] = useState<keyof typeof NEWS_SOURCES>("Ship & Bunker");
+  const [activeNewsSource, setActiveNewsSource] = useState<string>("전체");
+  const [newsItems, setNewsItems]               = useState<NewsItem[]>([]);
+  const [newsSources, setNewsSources]           = useState<NewsSource[]>([]);
+  const [newsLoading, setNewsLoading]           = useState(true);
+  const [newsUpdatedAt, setNewsUpdatedAt]       = useState<string>("");
   const [crudeRange, setCrudeRange]             = useState(30);
   const [maMode, setMaMode]                     = useState<"off" | "20" | "50">("off");
   const [forwardCurve, setForwardCurve]         = useState<{ curve: Array<{ mLabel: string; shortLabel: string; price: number }>; structure: string | null; m1ToLastSpread: number | null } | null>(null);
@@ -242,6 +220,20 @@ export default function BunkerDashboard() {
       .then(r => r.json())
       .then(setForwardCurve)
       .catch(() => {});
+  }, []);
+
+  // 뉴스 RSS 자동 수집
+  useEffect(() => {
+    setNewsLoading(true);
+    fetch("/api/news")
+      .then(r => r.json())
+      .then((json: { items: NewsItem[]; sources: NewsSource[]; updatedAt: string }) => {
+        setNewsItems(json.items ?? []);
+        setNewsSources(json.sources ?? []);
+        setNewsUpdatedAt(json.updatedAt ?? "");
+      })
+      .catch(() => {})
+      .finally(() => setNewsLoading(false));
   }, []);
 
   useEffect(() => {
@@ -396,44 +388,74 @@ export default function BunkerDashboard() {
 
   // ── 뉴스 탭 ───────────────────────────────────────
   const NewsTab = () => {
-    const src = NEWS_SOURCES[activeNewsSource];
+    const filtered = activeNewsSource === "전체"
+      ? newsItems
+      : newsItems.filter(n => n.source === activeNewsSource);
+
+    const formatRelative = (iso: string): string => {
+      const d = new Date(iso); if (isNaN(d.getTime())) return "";
+      const diffMs = Date.now() - d.getTime();
+      const m = Math.floor(diffMs / 60000);
+      if (m < 1) return "방금 전";
+      if (m < 60) return `${m}분 전`;
+      const h = Math.floor(m / 60);
+      if (h < 24) return `${h}시간 전`;
+      const days = Math.floor(h / 24);
+      if (days < 7) return `${days}일 전`;
+      return d.toISOString().slice(0, 10);
+    };
+
     return (
       <div style={{ padding: "24px 20px 0" }}>
-        <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
-          {Object.entries(NEWS_SOURCES).map(([name, s]) => (
-            <button key={name} onClick={() => setActiveNewsSource(name as keyof typeof NEWS_SOURCES)} style={{
-              padding: "8px 14px", borderRadius: 8,
-              border: `1px solid ${activeNewsSource === name ? s.color : "#1e3a5f"}`,
-              background: activeNewsSource === name ? s.color + "18" : "transparent",
-              color: activeNewsSource === name ? s.color : "#475569",
+        {/* 소스 필터 */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+          {[{ name: "전체", color: "#94a3b8", icon: "📰" }, ...newsSources].map(s => (
+            <button key={s.name} onClick={() => setActiveNewsSource(s.name)} style={{
+              padding: "7px 13px", borderRadius: 8,
+              border: `1px solid ${activeNewsSource === s.name ? s.color : "#1e3a5f"}`,
+              background: activeNewsSource === s.name ? s.color + "18" : "transparent",
+              color: activeNewsSource === s.name ? s.color : "#475569",
               cursor: "pointer", fontSize: 12, fontWeight: 600, fontFamily: "inherit",
-            }}>{s.icon} {name}</button>
+            }}>{s.icon} {s.name}</button>
           ))}
         </div>
-        <Card style={{ marginBottom: 16, border: `1px solid ${src.color}33` }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: src.color, marginBottom: 4 }}>{src.icon} {activeNewsSource}</div>
-              <div style={{ fontSize: 11, color: "#64748b" }}>{src.description}</div>
-            </div>
-            <a href={src.mainUrl} target="_blank" rel="noreferrer" style={{ padding: "8px 16px", borderRadius: 8, border: `1px solid ${src.color}`, color: src.color, fontSize: 12, fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}>사이트 바로가기 →</a>
+
+        {/* 업데이트 시각 */}
+        <div style={{ fontSize: 10, color: "#475569", marginBottom: 12, textAlign: "right" }}>
+          {newsUpdatedAt && `업데이트: ${new Date(newsUpdatedAt).toLocaleString("ko-KR", { hour: "2-digit", minute: "2-digit", month: "2-digit", day: "2-digit" })} · ${filtered.length}건`}
+        </div>
+
+        {newsLoading ? (
+          <div style={{ height: 200, display: "flex", alignItems: "center", justifyContent: "center", color: "#475569" }}>
+            뉴스 불러오는 중...
           </div>
-        </Card>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
-          {src.sections.map((section, i) => (
-            <a key={i} href={section.url} target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
-              <div style={{ background: "#0a1628", border: "1px solid #1e3a5f", borderRadius: 10, padding: "16px 18px", cursor: "pointer", transition: "all 0.15s", height: "100%", boxSizing: "border-box" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = src.color; (e.currentTarget as HTMLDivElement).style.background = "#0f1f38"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = "#1e3a5f"; (e.currentTarget as HTMLDivElement).style.background = "#0a1628"; }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#f1f5f9", marginBottom: 6 }}>{section.label}</div>
-                <div style={{ fontSize: 11, color: "#64748b", lineHeight: 1.4, marginBottom: 10 }}>{section.desc}</div>
-                <div style={{ fontSize: 10, color: src.color, opacity: 0.7 }}>열기 →</div>
-              </div>
-            </a>
-          ))}
-        </div>
-        <div style={{ marginTop: 20, padding: "14px 16px", background: "#0a1628", border: "1px solid #1e3a5f", borderRadius: 10, fontSize: 11, color: "#334155", textAlign: "center" }}>
-          💡 배포 후 업그레이드 예정 — 실시간 뉴스 자동 수집 (RSS 서버사이드 처리)
+        ) : filtered.length === 0 ? (
+          <div style={{ padding: 32, textAlign: "center", color: "#475569", fontSize: 12, background: "#0a1628", border: "1px solid #1e3a5f", borderRadius: 10 }}>
+            뉴스가 없습니다.
+          </div>
+        ) : (
+          <div style={{ display: "grid", gap: 10 }}>
+            {filtered.map((n, i) => (
+              <a key={i} href={n.link} target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+                <div style={{ background: "#0a1628", border: "1px solid #1e3a5f", borderRadius: 10, padding: "14px 16px", transition: "all 0.15s", cursor: "pointer" }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = n.color; (e.currentTarget as HTMLDivElement).style.background = "#0f1f38"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = "#1e3a5f"; (e.currentTarget as HTMLDivElement).style.background = "#0a1628"; }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: n.color, padding: "2px 8px", borderRadius: 4, background: n.color + "18" }}>{n.icon} {n.source}</span>
+                    <span style={{ fontSize: 10, color: "#475569" }}>{formatRelative(n.pubDate)}</span>
+                  </div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#f1f5f9", lineHeight: 1.4, marginBottom: n.summary ? 6 : 0 }}>{n.title}</div>
+                  {n.summary && (
+                    <div style={{ fontSize: 11, color: "#64748b", lineHeight: 1.5 }}>{n.summary}{n.summary.length >= 180 ? "…" : ""}</div>
+                  )}
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+
+        <div style={{ marginTop: 20, padding: "10px 14px", fontSize: 10, color: "#334155", textAlign: "center" }}>
+          RSS 피드 · 30분 캐시 · 헤드라인 클릭 시 원문으로 이동
         </div>
       </div>
     );
