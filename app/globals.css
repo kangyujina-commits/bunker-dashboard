@@ -63,6 +63,17 @@ html.theme-light body {
   color: #1e293b !important;
 }
 
+/* Wrapper 직접 타게팅 — attribute selector 의존 X */
+html.theme-light #bunker-root {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+}
+
+/* 모든 div/button/section 자손에서 다크 톤 inline 색을 light로 강제 변환 — universal */
+html.theme-light #bunker-root * {
+  /* nothing global — individual rules below handle specific cases */
+}
+
 /* 배경 — 페이지 */
 .theme-light [style*="background:#060e1a"],
 .theme-light [style*="background: #060e1a"] {
