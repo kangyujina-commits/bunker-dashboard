@@ -1,12 +1,119 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Polyline, Marker, Tooltip, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-import { PORTS, PRESET_ROUTES, DEFAULT_SPEED_KNOTS } from "../lib/ports";
+import { PORTS, PRESET_ROUTES, DEFAULT_SPEED_KNOTS, REGION_LABELS, type PortInfo } from "../lib/ports";
 import { calculateRoute, formatPassage } from "../lib/calculateRoute";
+
+// 검색 가능한 항만 선택기
+function PortPicker({
+  value, onChange, label, badge, badgeColor,
+}: {
+  value: string;
+  onChange: (code: string) => void;
+  label: string;
+  badge: string;
+  badgeColor: string;
+}) {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const port = PORTS[value];
+
+  // 바깥 클릭 시 닫기
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const entries = Object.entries(PORTS);
+    if (!q) return entries;
+    return entries.filter(([code, p]) =>
+      code.toLowerCase().includes(q) ||
+      p.name.toLowerCase().includes(q) ||
+      p.full.toLowerCase().includes(q)
+    );
+  }, [query]);
+
+  // 지역별 그룹화
+  const grouped = useMemo(() => {
+    const groups: Record<string, Array<[string, PortInfo]>> = {};
+    for (const [code, p] of filtered) {
+      if (!groups[p.region]) groups[p.region] = [];
+      groups[p.region].push([code, p]);
+    }
+    return groups;
+  }, [filtered]);
+
+  const selectStyle: React.CSSProperties = {
+    width: "100%", boxSizing: "border-box", padding: "8px 12px", fontSize: 13,
+    background: "#060e1a", color: "#f1f5f9", border: "1px solid #1e3a5f", borderRadius: 8,
+    fontFamily: "inherit", cursor: "text", outline: "none",
+  };
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>
+        <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 16, height: 16, borderRadius: "50%", background: badgeColor, color: "#060e1a", fontSize: 10, fontWeight: 700 }}>{badge}</span>
+        {label}
+      </label>
+      <input
+        type="text"
+        value={open ? query : (port?.full ?? "")}
+        onFocus={() => { setOpen(true); setQuery(""); }}
+        onChange={(e) => { setQuery(e.target.value); if (!open) setOpen(true); }}
+        placeholder="항만 검색 (도시/국가/코드)"
+        style={selectStyle}
+      />
+      {open && (
+        <div style={{
+          position: "absolute", top: "100%", left: 0, right: 0, zIndex: 1000,
+          background: "#0a1628", border: `1px solid ${badgeColor}66`, borderRadius: 8,
+          marginTop: 4, maxHeight: 320, overflowY: "auto",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+        }}>
+          {filtered.length === 0 ? (
+            <div style={{ padding: 14, fontSize: 12, color: "#64748b", textAlign: "center" }}>
+              검색 결과 없음
+            </div>
+          ) : Object.entries(grouped).map(([region, items]) => (
+            <div key={region}>
+              <div style={{ padding: "6px 12px", fontSize: 9, color: "#475569", textTransform: "uppercase", letterSpacing: "1.5px", background: "#060e1a", borderBottom: "1px solid #1e3a5f" }}>
+                {REGION_LABELS[region as PortInfo["region"]]} · {items.length}
+              </div>
+              {items.map(([code, p]) => (
+                <button
+                  key={code}
+                  onMouseDown={() => { onChange(code); setOpen(false); setQuery(""); }}
+                  style={{
+                    width: "100%", textAlign: "left", padding: "8px 12px",
+                    background: code === value ? `${badgeColor}22` : "transparent",
+                    border: "none", borderBottom: "1px solid #0f1f38",
+                    color: code === value ? badgeColor : "#cbd5e1",
+                    cursor: "pointer", fontSize: 12, fontFamily: "inherit",
+                    display: "flex", alignItems: "center", gap: 8,
+                  }}
+                >
+                  <span style={{ fontSize: 9, fontFamily: "monospace", color: "#64748b", minWidth: 28 }}>{code}</span>
+                  <span>{p.full}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 // 다크 테마 마커 아이콘
 const createMarkerIcon = (label: string, color: string) =>
@@ -50,11 +157,6 @@ export default function DistanceTab() {
   const card: React.CSSProperties = {
     background: "#0a1628", border: "1px solid #1e3a5f", borderRadius: 12, padding: "14px 16px",
   };
-  const selectStyle: React.CSSProperties = {
-    width: "100%", boxSizing: "border-box", padding: "8px 12px", fontSize: 14,
-    background: "#060e1a", color: "#f1f5f9", border: "1px solid #1e3a5f", borderRadius: 8,
-    fontFamily: "inherit", cursor: "pointer",
-  };
 
   return (
     <div style={{ padding: "24px 20px 0" }}>
@@ -79,28 +181,13 @@ export default function DistanceTab() {
 
       {/* From/To */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 10, alignItems: "end", marginBottom: 14 }}>
-        <div>
-          <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 16, height: 16, borderRadius: "50%", background: "#38bdf8", color: "#060e1a", fontSize: 10, fontWeight: 700 }}>A</span>
-            From
-          </label>
-          <select value={fromCode} onChange={e => setFromCode(e.target.value)} style={selectStyle}>
-            {Object.entries(PORTS).map(([code, p]) => <option key={code} value={code}>{p.full}</option>)}
-          </select>
-        </div>
+        <PortPicker value={fromCode} onChange={setFromCode} label="From" badge="A" badgeColor="#38bdf8" />
         <button onClick={handleSwap} title="Swap" style={{
           width: 40, height: 40, borderRadius: 8, border: "1px solid #1e3a5f",
           background: "#0a1628", color: "#94a3b8", cursor: "pointer", fontSize: 18, fontFamily: "inherit",
+          marginBottom: 1,
         }}>⇄</button>
-        <div>
-          <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 16, height: 16, borderRadius: "50%", background: "#a3e635", color: "#060e1a", fontSize: 10, fontWeight: 700 }}>B</span>
-            To
-          </label>
-          <select value={toCode} onChange={e => setToCode(e.target.value)} style={selectStyle}>
-            {Object.entries(PORTS).map(([code, p]) => <option key={code} value={code}>{p.full}</option>)}
-          </select>
-        </div>
+        <PortPicker value={toCode} onChange={setToCode} label="To" badge="B" badgeColor="#a3e635" />
       </div>
 
       {/* 속도 */}
