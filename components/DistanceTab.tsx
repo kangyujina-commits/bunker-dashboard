@@ -80,7 +80,10 @@ export default function DistanceTab() {
       {/* From/To */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 10, alignItems: "end", marginBottom: 14 }}>
         <div>
-          <label style={{ display: "block", fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>From</label>
+          <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 16, height: 16, borderRadius: "50%", background: "#38bdf8", color: "#060e1a", fontSize: 10, fontWeight: 700 }}>A</span>
+            From
+          </label>
           <select value={fromCode} onChange={e => setFromCode(e.target.value)} style={selectStyle}>
             {Object.entries(PORTS).map(([code, p]) => <option key={code} value={code}>{p.full}</option>)}
           </select>
@@ -90,7 +93,10 @@ export default function DistanceTab() {
           background: "#0a1628", color: "#94a3b8", cursor: "pointer", fontSize: 18, fontFamily: "inherit",
         }}>⇄</button>
         <div>
-          <label style={{ display: "block", fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>To</label>
+          <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 16, height: 16, borderRadius: "50%", background: "#a3e635", color: "#060e1a", fontSize: 10, fontWeight: 700 }}>B</span>
+            To
+          </label>
           <select value={toCode} onChange={e => setToCode(e.target.value)} style={selectStyle}>
             {Object.entries(PORTS).map(([code, p]) => <option key={code} value={code}>{p.full}</option>)}
           </select>
