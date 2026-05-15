@@ -11,6 +11,7 @@ import KnowledgeTab from "./KnowledgeTab";
 
 // react-leaflet은 window/document 의존 → SSR 비활성화
 const DistanceTab = dynamic(() => import("./DistanceTab"), { ssr: false });
+const StraitsTab  = dynamic(() => import("./StraitsTab"),  { ssr: false });
 
 const PRODUCT_COLORS: Record<string, string> = { "IFO 380": "#f97316", "VLSFO": "#38bdf8", "LS MGO": "#a3e635" };
 const CRUDE_COLORS:   Record<string, string> = { "WTI": "#facc15", "Brent": "#c084fc", "Dubai": "#fb7185" };
@@ -713,13 +714,14 @@ export default function BunkerDashboard() {
 
       {/* 메인 탭 */}
       <div style={{ borderBottom: "1px solid #1e3a5f", display: "flex", padding: "0 20px", background: "#060e1a", overflowX: "auto" }}>
-        {([["dashboard", "📊 대시보드"], ["map", "🗺 지도"], ["news", "📰 뉴스"], ["knowledge", "📚 상식"]] as const).map(([key, label]) => (
+        {([["dashboard", "📊 대시보드"], ["map", "🗺 지도"], ["straits", "🌊 해협"], ["news", "📰 뉴스"], ["knowledge", "📚 상식"]] as const).map(([key, label]) => (
           <button key={key} onClick={() => setMainTab(key)} style={{ padding: "12px 18px", border: "none", background: "transparent", color: mainTab === key ? "#f8fafc" : "#475569", borderBottom: mainTab === key ? "2px solid #38bdf8" : "2px solid transparent", fontSize: 13, fontWeight: mainTab === key ? 700 : 400, cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s", whiteSpace: "nowrap" }}>{label}</button>
         ))}
       </div>
 
       {mainTab === "dashboard" ? <DashboardTab />
         : mainTab === "map"       ? <DistanceTab />
+        : mainTab === "straits"   ? <StraitsTab />
         : mainTab === "knowledge" ? <KnowledgeTab />
         : <NewsTab />}
 
