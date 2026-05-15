@@ -1,4 +1,4 @@
-/* Noto Sans KR — Google 표준, 한글 가독성 우수 */
+/* Noto Sans KR */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
 
 *, *::before, *::after {
@@ -36,86 +36,73 @@ input, button, select, textarea {
   font-weight: 600;
 }
 
-/* =========== DARK THEME (기본) =========== */
-:root, [data-theme="dark"] body {
-  background: #060e1a;
-  color: #e2e8f0;
-}
+/* =========== DARK (기본) =========== */
+html, body { background: #060e1a; color: #e2e8f0; }
 
-/* 다크에서 너무 어두운 회색 약간 밝게 */
 [data-theme="dark"] [style*="color:#475569"],
 [data-theme="dark"] [style*="color: #475569"] { color: #64748b !important; }
 [data-theme="dark"] [style*="color:#334155"],
 [data-theme="dark"] [style*="color: #334155"] { color: #475569 !important; }
 
-/* =========== LIGHT THEME =========== */
-[data-theme="light"] body {
-  background: #f1f5f9;
-  color: #1e293b;
+/* =========== LIGHT =========== */
+html[data-theme="light"], html[data-theme="light"] body {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
 }
 
-/* 배경 — 페이지·모달 (#060e1a → light page) */
+/* ---- 배경 ---- */
 [data-theme="light"] [style*="background:#060e1a"],
 [data-theme="light"] [style*="background: #060e1a"] {
   background: #f1f5f9 !important;
 }
-
-/* 배경 — 카드 (#0a1628 → 흰색) */
+[data-theme="light"] [style*="background:rgba(6,14,26"],
+[data-theme="light"] [style*="background: rgba(6,14,26"],
+[data-theme="light"] [style*="background:rgba(6, 14, 26"] {
+  background: rgba(241,245,249,0.92) !important;
+}
 [data-theme="light"] [style*="background:#0a1628"],
 [data-theme="light"] [style*="background: #0a1628"] {
   background: #ffffff !important;
 }
-
-/* 어두운 sub-backgrounds */
 [data-theme="light"] [style*="background:#0f2744"],
-[data-theme="light"] [style*="background: #0f2744"],
+[data-theme="light"] [style*="background: #0f2744"] {
+  background: #f1f5f9 !important;
+}
 [data-theme="light"] [style*="background:#0f1f38"],
 [data-theme="light"] [style*="background: #0f1f38"] {
   background: #f8fafc !important;
 }
 
-/* 테두리 — main navy (#1e3a5f) → light gray */
-[data-theme="light"] [style*="#1e3a5f"] {
+/* ---- 테두리 (border shorthand 패턴) ---- */
+[data-theme="light"] [style*="solid #1e3a5f"],
+[data-theme="light"] [style*="solid#1e3a5f"],
+[data-theme="light"] [style*="dashed #1e3a5f"],
+[data-theme="light"] [style*="dashed#1e3a5f"] {
   border-color: #cbd5e1 !important;
 }
-/* 더 어두운 sub-border */
-[data-theme="light"] [style*="#0f2744"],
-[data-theme="light"] [style*="#0f1f38"] {
+[data-theme="light"] [style*="solid #0f2744"],
+[data-theme="light"] [style*="solid#0f2744"],
+[data-theme="light"] [style*="solid #0f1f38"],
+[data-theme="light"] [style*="solid#0f1f38"] {
   border-color: #e2e8f0 !important;
 }
 
-/* 텍스트 — 흰색 계열을 검정 계열로 */
+/* ---- 텍스트 (흰색 계열 → 검은색 계열) ---- */
 [data-theme="light"] [style*="color:#f8fafc"],
-[data-theme="light"] [style*="color: #f8fafc"] {
-  color: #0f172a !important;
-}
-[data-theme="light"] [style*="color:#e2e8f0"],
-[data-theme="light"] [style*="color: #e2e8f0"] {
-  color: #1e293b !important;
-}
-[data-theme="light"] [style*="color:#cbd5e1"],
-[data-theme="light"] [style*="color: #cbd5e1"] {
-  color: #334155 !important;
-}
+[data-theme="light"] [style*="color: #f8fafc"] { color: #0f172a !important; }
 [data-theme="light"] [style*="color:#f1f5f9"],
-[data-theme="light"] [style*="color: #f1f5f9"] {
-  color: #0f172a !important;
-}
+[data-theme="light"] [style*="color: #f1f5f9"] { color: #0f172a !important; }
+[data-theme="light"] [style*="color:#e2e8f0"],
+[data-theme="light"] [style*="color: #e2e8f0"] { color: #1e293b !important; }
+[data-theme="light"] [style*="color:#cbd5e1"],
+[data-theme="light"] [style*="color: #cbd5e1"] { color: #334155 !important; }
 
-/* 회색 톤 — 라이트에선 반대로 매핑 */
+/* ---- 회색 톤 (라이트에선 반대 매핑) ---- */
 [data-theme="light"] [style*="color:#94a3b8"],
-[data-theme="light"] [style*="color: #94a3b8"] {
-  color: #475569 !important;
-}
+[data-theme="light"] [style*="color: #94a3b8"] { color: #475569 !important; }
 [data-theme="light"] [style*="color:#64748b"],
-[data-theme="light"] [style*="color: #64748b"] {
-  color: #64748b !important;  /* 그대로 */
-}
+[data-theme="light"] [style*="color: #64748b"] { color: #64748b !important; }
 [data-theme="light"] [style*="color:#475569"],
-[data-theme="light"] [style*="color: #475569"] {
-  color: #94a3b8 !important;
-}
+[data-theme="light"] [style*="color: #475569"] { color: #94a3b8 !important; }
 [data-theme="light"] [style*="color:#334155"],
-[data-theme="light"] [style*="color: #334155"] {
-  color: #cbd5e1 !important;
-}
+[data-theme="light"] [style*="color: #334155"] { color: #cbd5e1 !important; }
