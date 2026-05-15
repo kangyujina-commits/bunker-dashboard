@@ -96,8 +96,13 @@ export default function StraitsTab() {
                 }}
               >
                 <Tooltip direction="top" offset={[0, -8]} opacity={1} permanent={false} sticky>
-                  <div style={{ background: "#0a1628", padding: "4px 8px", borderRadius: 6, border: `1px solid ${meta.color}`, color: "#f8fafc", fontSize: 11, fontWeight: 600, fontFamily: "inherit" }}>
-                    {TYPE_META[s.type].icon} {s.nameKr}
+                  <div style={{ background: "#0a1628", padding: "5px 9px", borderRadius: 6, border: `1px solid ${meta.color}`, fontFamily: "inherit" }}>
+                    <div style={{ color: "#f8fafc", fontSize: 11, fontWeight: 700, lineHeight: 1.2 }}>
+                      {TYPE_META[s.type].icon} {s.nameKr}
+                    </div>
+                    <div style={{ color: meta.color, fontSize: 9, fontWeight: 500, marginTop: 2, lineHeight: 1.1 }}>
+                      {s.nameEn}
+                    </div>
                   </div>
                 </Tooltip>
                 <Popup>
