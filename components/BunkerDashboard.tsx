@@ -153,6 +153,17 @@ export default function BunkerDashboard() {
   const [maMode, setMaMode]                     = useState<"off" | "20" | "50">("off");
   const [forwardCurve, setForwardCurve]         = useState<{ curve: Array<{ mLabel: string; shortLabel: string; price: number }>; structure: string | null; m1ToLastSpread: number | null } | null>(null);
   const [showScrollTop, setShowScrollTop]       = useState(false);
+  const [theme, setTheme]                       = useState<"dark" | "light">("dark");
+
+  // Theme: localStorage에서 로드 + 변경 시 html에 적용
+  useEffect(() => {
+    const saved = (localStorage.getItem("bb_theme") as "dark" | "light" | null) ?? "dark";
+    setTheme(saved);
+  }, []);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("bb_theme", theme);
+  }, [theme]);
 
   // 스크롤 400px 이상 내려가면 맨 위로 버튼 표시
   useEffect(() => {
@@ -701,7 +712,21 @@ export default function BunkerDashboard() {
             <div style={{ fontSize: 10, color: "#475569", letterSpacing: "1.5px", textTransform: "uppercase" }}>Marine Fuel &amp; Crude</div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 14, alignItems: "center", flexShrink: 0 }}>
+        <div style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
+          {/* 테마 토글 */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            title={theme === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환"}
+            aria-label="테마 전환"
+            style={{
+              width: 34, height: 34, borderRadius: 17, border: "1px solid #1e3a5f",
+              background: "#0a1628", color: theme === "dark" ? "#facc15" : "#c084fc",
+              cursor: "pointer", fontSize: 16, fontFamily: "inherit",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            {theme === "dark" ? "☀️" : "🌙"}
+          </button>
           {mainTab === "dashboard" && (
             <button onClick={() => setShowInput(true)} style={{ background: "linear-gradient(135deg,#f97316,#38bdf8)", border: "none", borderRadius: 8, padding: "7px 14px", color: "#fff", fontWeight: 700, fontSize: 12, cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>+ 가격 입력</button>
           )}
@@ -720,8 +745,8 @@ export default function BunkerDashboard() {
       </div>
 
       {mainTab === "dashboard" ? <DashboardTab />
-        : mainTab === "map"       ? <DistanceTab />
-        : mainTab === "straits"   ? <StraitsTab />
+        : mainTab === "map"       ? <DistanceTab theme={theme} />
+        : mainTab === "straits"   ? <StraitsTab theme={theme} />
         : mainTab === "knowledge" ? <KnowledgeTab />
         : <NewsTab />}
 

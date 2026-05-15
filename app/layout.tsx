@@ -18,9 +18,24 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
 };
 
+// React hydration 이전에 theme 적용 — 깜빡임(FOUC) 방지
+const themeInitScript = `
+(function() {
+  try {
+    var t = localStorage.getItem('bb_theme') || 'dark';
+    document.documentElement.dataset.theme = t;
+  } catch (e) {
+    document.documentElement.dataset.theme = 'dark';
+  }
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
+    <html lang="ko" data-theme="dark">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );

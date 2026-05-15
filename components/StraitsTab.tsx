@@ -33,7 +33,10 @@ function FlyToStrait({ target }: { target: Strait | null }) {
   return null;
 }
 
-export default function StraitsTab() {
+export default function StraitsTab({ theme = "dark" }: { theme?: "dark" | "light" }) {
+  const tileUrl = theme === "light"
+    ? "https://{s}.basemaps.cartocdn.com/voyager/{z}/{x}/{y}{r}.png"
+    : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeRegion, setActiveRegion] = useState<"all" | Strait["region"]>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -74,7 +77,7 @@ export default function StraitsTab() {
         >
           <TileLayer
             attribution='&copy; OpenStreetMap'
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            url={tileUrl}
           />
           <FlyToStrait target={selected} />
           {filtered.map(s => {

@@ -134,7 +134,10 @@ function FitBounds({ coordinates }: { coordinates: [number, number][] }) {
   return null;
 }
 
-export default function DistanceTab() {
+export default function DistanceTab({ theme = "dark" }: { theme?: "dark" | "light" }) {
+  const tileUrl = theme === "light"
+    ? "https://{s}.basemaps.cartocdn.com/voyager/{z}/{x}/{y}{r}.png"
+    : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
   const [fromCode, setFromCode] = useState("FJR");
   const [toCode, setToCode] = useState("SIN");
   const [speed, setSpeed] = useState(DEFAULT_SPEED_KNOTS);
@@ -236,7 +239,7 @@ export default function DistanceTab() {
               attributionControl={false}
             >
               <TileLayer
-                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                url={tileUrl}
                 subdomains="abcd"
                 maxZoom={19}
               />
