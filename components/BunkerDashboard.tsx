@@ -703,12 +703,27 @@ export default function BunkerDashboard() {
     </div>
   );
 
+  const isLight = theme === "light";
+
   return (
-    <div style={{ minHeight: "100vh", background: "#060e1a", color: "#e2e8f0", fontFamily: "'DM Sans','Noto Sans KR',sans-serif", paddingBottom: 48 }}>
+    <div id="bunker-root" style={{
+      minHeight: "100vh",
+      background: isLight ? "#f1f5f9" : "#060e1a",
+      color: isLight ? "#1e293b" : "#e2e8f0",
+      fontFamily: "'DM Sans','Noto Sans KR',sans-serif",
+      paddingBottom: 48,
+    }}>
       {showInput && <InputPanel />}
 
       {/* 헤더 */}
-      <div style={{ borderBottom: "1px solid #1e3a5f", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(6,14,26,0.95)", position: "sticky", top: 0, zIndex: 10, backdropFilter: "blur(10px)", gap: 12 }}>
+      <div style={{
+        borderBottom: `1px solid ${isLight ? "#cbd5e1" : "#1e3a5f"}`,
+        padding: "16px 20px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        background: isLight ? "rgba(255,255,255,0.95)" : "rgba(6,14,26,0.95)",
+        position: "sticky", top: 0, zIndex: 10,
+        backdropFilter: "blur(10px)", gap: 12,
+      }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
           <div style={{ width: 6, height: 32, borderRadius: 4, flexShrink: 0, background: "linear-gradient(180deg,#f97316,#38bdf8)" }} />
           <div>
