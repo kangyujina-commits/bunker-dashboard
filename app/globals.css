@@ -1,5 +1,5 @@
-/* Pretendard Variable — 한글+영문 모두 가독성 좋은 modern UI 폰트 */
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+/* Noto Sans KR — Google 표준, 한글 가독성 우수 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -9,8 +9,7 @@
 
 html, body {
   font-family:
-    "Pretendard Variable",
-    "Pretendard",
+    "Noto Sans KR",
     -apple-system,
     BlinkMacSystemFont,
     system-ui,
@@ -18,10 +17,9 @@ html, body {
     "Helvetica Neue",
     "Segoe UI",
     "Apple SD Gothic Neo",
-    "Noto Sans KR",
     "Malgun Gothic",
     sans-serif;
-  font-weight: 500;             /* 기본을 500(medium)으로 끌어올림 (기존 400) */
+  font-weight: 600;             /* base 600 (semibold) — 더 두껍게 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -33,14 +31,16 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* 숫자 (가격, 환율) 보일 때 더 또렷하게 */
 input[type="number"],
 button,
-input[type="text"] {
+input[type="text"],
+select,
+textarea {
   font-family: inherit;
+  font-weight: 600;
 }
 
-/* 작은 글씨도 또렷하게 — 14px 이하는 굵게 보정 */
+/* 작은 글씨도 또렷하게 */
 :where(.tiny, [class*="tiny"]) {
-  font-weight: 600;
+  font-weight: 700;
 }
