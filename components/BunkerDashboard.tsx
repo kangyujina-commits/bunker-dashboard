@@ -162,6 +162,10 @@ export default function BunkerDashboard() {
   }, []);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.toggle("theme-light", theme === "light");
+    document.documentElement.classList.toggle("theme-dark",  theme === "dark");
+    document.body.classList.toggle("theme-light", theme === "light");
+    document.body.classList.toggle("theme-dark",  theme === "dark");
     localStorage.setItem("bb_theme", theme);
   }, [theme]);
 
