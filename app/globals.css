@@ -19,7 +19,7 @@ html, body {
     "Apple SD Gothic Neo",
     "Malgun Gothic",
     sans-serif;
-  font-weight: 600;             /* base 600 (semibold) — 더 두껍게 */
+  font-weight: 600;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -27,8 +27,10 @@ html, body {
 
 body {
   background: #060e1a;
-  color: #cbd5e1;
+  color: #e2e8f0;              /* 본문 색 밝게: #cbd5e1 → #e2e8f0 */
   letter-spacing: -0.01em;
+  line-height: 1.5;            /* 줄간격 확보 */
+  zoom: 1.1;                   /* 전체 10% 크게 */
 }
 
 input[type="number"],
@@ -40,7 +42,12 @@ textarea {
   font-weight: 600;
 }
 
-/* 작은 글씨도 또렷하게 */
 :where(.tiny, [class*="tiny"]) {
   font-weight: 700;
 }
+
+/* 어두운 회색 (가독성 떨어지던 톤들)을 약간 밝게 보정 */
+[style*="color:#475569"],
+[style*="color: #475569"] { color: #64748b !important; }
+[style*="color:#334155"],
+[style*="color: #334155"] { color: #475569 !important; }
