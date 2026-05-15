@@ -77,7 +77,7 @@ export default function StraitsTab() {
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
           <FlyToStrait target={selected} />
-          {STRAITS.map(s => {
+          {filtered.map(s => {
             const meta = REGION_META[s.region];
             const isSelected = selectedId === s.id;
             return (
