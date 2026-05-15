@@ -5,7 +5,11 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend, ResponsiveContainer,
 } from "recharts";
+import dynamic from "next/dynamic";
 import SBComparison from "./SBComparison";
+
+// react-leaflet은 window/document 의존 → SSR 비활성화
+const DistanceTab = dynamic(() => import("./DistanceTab"), { ssr: false });
 
 const PRODUCT_COLORS: Record<string, string> = { "IFO 380": "#f97316", "VLSFO": "#38bdf8", "LS MGO": "#a3e635" };
 const CRUDE_COLORS:   Record<string, string> = { "WTI": "#facc15", "Brent": "#c084fc", "Dubai": "#fb7185" };
@@ -708,12 +712,12 @@ export default function BunkerDashboard() {
 
       {/* 메인 탭 */}
       <div style={{ borderBottom: "1px solid #1e3a5f", display: "flex", padding: "0 20px", background: "#060e1a" }}>
-        {([["dashboard", "📊 대시보드"], ["news", "📰 뉴스"]] as const).map(([key, label]) => (
+        {([["dashboard", "📊 대시보드"], ["map", "🗺 지도"], ["news", "📰 뉴스"]] as const).map(([key, label]) => (
           <button key={key} onClick={() => setMainTab(key)} style={{ padding: "12px 20px", border: "none", background: "transparent", color: mainTab === key ? "#f8fafc" : "#475569", borderBottom: mainTab === key ? "2px solid #38bdf8" : "2px solid transparent", fontSize: 13, fontWeight: mainTab === key ? 700 : 400, cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s" }}>{label}</button>
         ))}
       </div>
 
-      {mainTab === "dashboard" ? <DashboardTab /> : <NewsTab />}
+      {mainTab === "dashboard" ? <DashboardTab /> : mainTab === "map" ? <DistanceTab /> : <NewsTab />}
 
       <div style={{ padding: "16px 20px 0", fontSize: 10, color: "#334155", textAlign: "center" }}>
         원유: Yahoo Finance 실시간 · 환율: ExchangeRate-API · S&B 가격: 1시간 캐시 · 뉴스: 링크 모음
