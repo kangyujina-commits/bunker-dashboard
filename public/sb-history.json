@@ -3,6 +3,11 @@
     "Singapore": {
       "VLSFO": [
         {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 645.5
+        },
+        {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
           "price": 665.5
@@ -195,6 +200,11 @@
       ],
       "IFO380": [
         {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 476
+        },
+        {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
           "price": 506
@@ -386,6 +396,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 923
+        },
         {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
@@ -581,6 +596,11 @@
     "Fujairah": {
       "VLSFO": [
         {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 1193
+        },
+        {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
           "price": 1209.5
@@ -773,6 +793,11 @@
       ],
       "IFO380": [
         {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 616
+        },
+        {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
           "price": 618
@@ -964,6 +989,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 1395
+        },
         {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
@@ -1159,6 +1189,11 @@
     "Rotterdam": {
       "VLSFO": [
         {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 594
+        },
+        {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
           "price": 598
@@ -1351,6 +1386,11 @@
       ],
       "IFO380": [
         {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 495
+        },
+        {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
           "price": 507.5
@@ -1542,6 +1582,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "W Jun 17",
+          "dateISO": "2026-06-17",
+          "price": 897.5
+        },
         {
           "date": "T Jun 16",
           "dateISO": "2026-06-16",
@@ -1737,9 +1782,14 @@
     "Hong Kong": {
       "VLSFO": [
         {
+          "date": "T Jun 18",
+          "dateISO": "2026-06-18",
+          "price": 667.5
+        },
+        {
           "date": "W Jun 17",
           "dateISO": "2026-06-17",
-          "price": 669
+          "price": 655
         },
         {
           "date": "T Jun 16",
@@ -1934,9 +1984,14 @@
       ],
       "IFO380": [
         {
+          "date": "T Jun 18",
+          "dateISO": "2026-06-18",
+          "price": 495
+        },
+        {
           "date": "W Jun 17",
           "dateISO": "2026-06-17",
-          "price": 505
+          "price": 500.5
         },
         {
           "date": "T Jun 16",
@@ -2130,6 +2185,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "T Jun 18",
+          "dateISO": "2026-06-18",
+          "price": 875
+        },
         {
           "date": "W Jun 17",
           "dateISO": "2026-06-17",
@@ -2332,7 +2392,7 @@
         {
           "date": "W Jun 17",
           "dateISO": "2026-06-17",
-          "price": 735
+          "price": 719
         },
         {
           "date": "T Jun 16",
@@ -2529,7 +2589,7 @@
         {
           "date": "W Jun 17",
           "dateISO": "2026-06-17",
-          "price": 600
+          "price": 552.5
         },
         {
           "date": "T Jun 16",
@@ -2726,7 +2786,7 @@
         {
           "date": "W Jun 17",
           "dateISO": "2026-06-17",
-          "price": 1090
+          "price": 1084.5
         },
         {
           "date": "T Jun 16",
@@ -2921,5 +2981,5 @@
       ]
     }
   },
-  "updatedAt": "2026-06-17T16:32:07.787Z"
+  "updatedAt": "2026-06-18T16:20:39.033Z"
 }
