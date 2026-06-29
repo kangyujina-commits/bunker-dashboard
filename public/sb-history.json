@@ -2795,6 +2795,11 @@
     "LA/Long Beach": {
       "VLSFO": [
         {
+          "date": "M Jun 29",
+          "dateISO": "2026-06-29",
+          "price": 651
+        },
+        {
           "date": "F Jun 26",
           "dateISO": "2026-06-26",
           "price": 658.5
@@ -3026,6 +3031,11 @@
         }
       ],
       "IFO380": [
+        {
+          "date": "M Jun 29",
+          "dateISO": "2026-06-29",
+          "price": 567
+        },
         {
           "date": "F Jun 26",
           "dateISO": "2026-06-26",
@@ -3259,6 +3269,11 @@
       ],
       "LSMGO": [
         {
+          "date": "M Jun 29",
+          "dateISO": "2026-06-29",
+          "price": 1066
+        },
+        {
           "date": "F Jun 26",
           "dateISO": "2026-06-26",
           "price": 1009
@@ -3491,5 +3506,5 @@
       ]
     }
   },
-  "updatedAt": "2026-06-28T14:42:08.674Z"
+  "updatedAt": "2026-06-29T16:32:26.598Z"
 }
