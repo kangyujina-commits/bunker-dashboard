@@ -3,6 +3,11 @@
     "Singapore": {
       "VLSFO": [
         {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 750.5
+        },
+        {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
           "price": 692.5
@@ -290,6 +295,11 @@
       ],
       "IFO380": [
         {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 546
+        },
+        {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
           "price": 496
@@ -576,6 +586,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 1085
+        },
         {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
@@ -866,6 +881,11 @@
     "Fujairah": {
       "VLSFO": [
         {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 775
+        },
+        {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
           "price": 725.5
@@ -1153,6 +1173,11 @@
       ],
       "IFO380": [
         {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 560.5
+        },
+        {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
           "price": 518
@@ -1439,6 +1464,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 1335.5
+        },
         {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
@@ -1729,6 +1759,11 @@
     "Rotterdam": {
       "VLSFO": [
         {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 659
+        },
+        {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
           "price": 630
@@ -2016,6 +2051,11 @@
       ],
       "IFO380": [
         {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 529.5
+        },
+        {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
           "price": 485
@@ -2302,6 +2342,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "T Jul 14",
+          "dateISO": "2026-07-14",
+          "price": 1107.5
+        },
         {
           "date": "M Jul 13",
           "dateISO": "2026-07-13",
@@ -2592,9 +2637,14 @@
     "Hong Kong": {
       "VLSFO": [
         {
+          "date": "W Jul 15",
+          "dateISO": "2026-07-15",
+          "price": 794.5
+        },
+        {
           "date": "T Jul 14",
           "dateISO": "2026-07-14",
-          "price": 770.5
+          "price": 773
         },
         {
           "date": "M Jul 13",
@@ -2884,9 +2934,14 @@
       ],
       "IFO380": [
         {
+          "date": "W Jul 15",
+          "dateISO": "2026-07-15",
+          "price": 590.5
+        },
+        {
           "date": "T Jul 14",
           "dateISO": "2026-07-14",
-          "price": 590
+          "price": 577
         },
         {
           "date": "M Jul 13",
@@ -3176,9 +3231,14 @@
       ],
       "LSMGO": [
         {
+          "date": "W Jul 15",
+          "dateISO": "2026-07-15",
+          "price": 1150
+        },
+        {
           "date": "T Jul 14",
           "dateISO": "2026-07-14",
-          "price": 1168.5
+          "price": 1118
         },
         {
           "date": "M Jul 13",
@@ -3470,9 +3530,14 @@
     "LA/Long Beach": {
       "VLSFO": [
         {
+          "date": "W Jul 15",
+          "dateISO": "2026-07-15",
+          "price": 785.5
+        },
+        {
           "date": "T Jul 14",
           "dateISO": "2026-07-14",
-          "price": 773
+          "price": 797
         },
         {
           "date": "M Jul 13",
@@ -3762,9 +3827,14 @@
       ],
       "IFO380": [
         {
+          "date": "W Jul 15",
+          "dateISO": "2026-07-15",
+          "price": 674.5
+        },
+        {
           "date": "T Jul 14",
           "dateISO": "2026-07-14",
-          "price": 658.5
+          "price": 679
         },
         {
           "date": "M Jul 13",
@@ -4054,9 +4124,14 @@
       ],
       "LSMGO": [
         {
+          "date": "W Jul 15",
+          "dateISO": "2026-07-15",
+          "price": 1291.5
+        },
+        {
           "date": "T Jul 14",
           "dateISO": "2026-07-14",
-          "price": 1221.5
+          "price": 1236
         },
         {
           "date": "M Jul 13",
@@ -4346,5 +4421,5 @@
       ]
     }
   },
-  "updatedAt": "2026-07-14T14:41:13.815Z"
+  "updatedAt": "2026-07-15T14:40:53.724Z"
 }
