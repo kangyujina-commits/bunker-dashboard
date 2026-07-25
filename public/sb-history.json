@@ -3,6 +3,11 @@
     "Singapore": {
       "VLSFO": [
         {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 869
+        },
+        {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
           "price": 874.5
@@ -330,6 +335,11 @@
       ],
       "IFO380": [
         {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 634.5
+        },
+        {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
           "price": 639
@@ -656,6 +666,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 1282.5
+        },
         {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
@@ -986,6 +1001,11 @@
     "Fujairah": {
       "VLSFO": [
         {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 852
+        },
+        {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
           "price": 847.5
@@ -1313,6 +1333,11 @@
       ],
       "IFO380": [
         {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 647
+        },
+        {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
           "price": 645
@@ -1639,6 +1664,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 1463.5
+        },
         {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
@@ -1969,6 +1999,11 @@
     "Rotterdam": {
       "VLSFO": [
         {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 697.5
+        },
+        {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
           "price": 713
@@ -2296,6 +2331,11 @@
       ],
       "IFO380": [
         {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 582
+        },
+        {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
           "price": 588.5
@@ -2622,6 +2662,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "F Jul 24",
+          "dateISO": "2026-07-24",
+          "price": 1260
+        },
         {
           "date": "T Jul 23",
           "dateISO": "2026-07-23",
@@ -2954,7 +2999,7 @@
         {
           "date": "F Jul 24",
           "dateISO": "2026-07-24",
-          "price": 835
+          "price": 839
         },
         {
           "date": "T Jul 23",
@@ -3286,7 +3331,7 @@
         {
           "date": "F Jul 24",
           "dateISO": "2026-07-24",
-          "price": 644
+          "price": 640.5
         },
         {
           "date": "T Jul 23",
@@ -3618,7 +3663,7 @@
         {
           "date": "F Jul 24",
           "dateISO": "2026-07-24",
-          "price": 1255
+          "price": 1258
         },
         {
           "date": "T Jul 23",
@@ -3952,7 +3997,7 @@
         {
           "date": "F Jul 24",
           "dateISO": "2026-07-24",
-          "price": 865
+          "price": 866.5
         },
         {
           "date": "T Jul 23",
@@ -4284,7 +4329,7 @@
         {
           "date": "F Jul 24",
           "dateISO": "2026-07-24",
-          "price": 713
+          "price": 763.5
         },
         {
           "date": "T Jul 23",
@@ -4616,7 +4661,7 @@
         {
           "date": "F Jul 24",
           "dateISO": "2026-07-24",
-          "price": 1374
+          "price": 1418.5
         },
         {
           "date": "T Jul 23",
@@ -4946,5 +4991,5 @@
       ]
     }
   },
-  "updatedAt": "2026-07-24T14:42:12.338Z"
+  "updatedAt": "2026-07-25T14:25:32.420Z"
 }
