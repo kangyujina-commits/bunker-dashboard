@@ -3,6 +3,11 @@
     "Singapore": {
       "VLSFO": [
         {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 834
+        },
+        {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
           "price": 821.5
@@ -385,6 +390,11 @@
       ],
       "IFO380": [
         {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 601.5
+        },
+        {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
           "price": 588.5
@@ -766,6 +776,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 1156.5
+        },
         {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
@@ -1151,6 +1166,11 @@
     "Fujairah": {
       "VLSFO": [
         {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 813
+        },
+        {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
           "price": 792
@@ -1533,6 +1553,11 @@
       ],
       "IFO380": [
         {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 607.5
+        },
+        {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
           "price": 596.5
@@ -1914,6 +1939,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 1312.5
+        },
         {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
@@ -2299,6 +2329,11 @@
     "Rotterdam": {
       "VLSFO": [
         {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 646.5
+        },
+        {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
           "price": 636.5
@@ -2681,6 +2716,11 @@
       ],
       "IFO380": [
         {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 516.5
+        },
+        {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
           "price": 514.5
@@ -3062,6 +3102,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "M Aug 10",
+          "dateISO": "2026-08-10",
+          "price": 1194.5
+        },
         {
           "date": "F Aug 7",
           "dateISO": "2026-08-07",
@@ -3447,9 +3492,14 @@
     "Hong Kong": {
       "VLSFO": [
         {
+          "date": "T Aug 11",
+          "dateISO": "2026-08-11",
+          "price": 845
+        },
+        {
           "date": "M Aug 10",
           "dateISO": "2026-08-10",
-          "price": 845.5
+          "price": 848
         },
         {
           "date": "F Aug 7",
@@ -3833,6 +3883,11 @@
         }
       ],
       "IFO380": [
+        {
+          "date": "T Aug 11",
+          "dateISO": "2026-08-11",
+          "price": 668
+        },
         {
           "date": "M Aug 10",
           "dateISO": "2026-08-10",
@@ -4221,9 +4276,14 @@
       ],
       "LSMGO": [
         {
+          "date": "T Aug 11",
+          "dateISO": "2026-08-11",
+          "price": 1245
+        },
+        {
           "date": "M Aug 10",
           "dateISO": "2026-08-10",
-          "price": 1144.5
+          "price": 1142
         },
         {
           "date": "F Aug 7",
@@ -4612,7 +4672,7 @@
         {
           "date": "M Aug 10",
           "dateISO": "2026-08-10",
-          "price": 820
+          "price": 842
         },
         {
           "date": "F Aug 7",
@@ -4999,7 +5059,7 @@
         {
           "date": "M Aug 10",
           "dateISO": "2026-08-10",
-          "price": 658
+          "price": 664.5
         },
         {
           "date": "F Aug 7",
@@ -5386,7 +5446,7 @@
         {
           "date": "M Aug 10",
           "dateISO": "2026-08-10",
-          "price": 1372
+          "price": 1363
         },
         {
           "date": "F Aug 7",
@@ -5771,5 +5831,5 @@
       ]
     }
   },
-  "updatedAt": "2026-08-10T14:11:04.959Z"
+  "updatedAt": "2026-08-11T14:10:31.281Z"
 }
