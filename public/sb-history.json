@@ -4347,6 +4347,11 @@
     "Hong Kong": {
       "VLSFO": [
         {
+          "date": "M Sep 7",
+          "dateISO": "2026-09-07",
+          "price": 869
+        },
+        {
           "date": "F Sep 4",
           "dateISO": "2026-09-04",
           "price": 869
@@ -4829,6 +4834,11 @@
       ],
       "IFO380": [
         {
+          "date": "M Sep 7",
+          "dateISO": "2026-09-07",
+          "price": 701
+        },
+        {
           "date": "F Sep 4",
           "dateISO": "2026-09-04",
           "price": 694.5
@@ -5310,6 +5320,11 @@
         }
       ],
       "LSMGO": [
+        {
+          "date": "M Sep 7",
+          "dateISO": "2026-09-07",
+          "price": 1274
+        },
         {
           "date": "F Sep 4",
           "dateISO": "2026-09-04",
@@ -5795,6 +5810,11 @@
     "LA/Long Beach": {
       "VLSFO": [
         {
+          "date": "M Sep 7",
+          "dateISO": "2026-09-07",
+          "price": 961
+        },
+        {
           "date": "F Sep 4",
           "dateISO": "2026-09-04",
           "price": 944
@@ -6276,6 +6296,11 @@
         }
       ],
       "IFO380": [
+        {
+          "date": "M Sep 7",
+          "dateISO": "2026-09-07",
+          "price": 746
+        },
         {
           "date": "F Sep 4",
           "dateISO": "2026-09-04",
@@ -6759,6 +6784,11 @@
       ],
       "LSMGO": [
         {
+          "date": "M Sep 7",
+          "dateISO": "2026-09-07",
+          "price": 1668
+        },
+        {
           "date": "F Sep 4",
           "dateISO": "2026-09-04",
           "price": 1654
@@ -7241,5 +7271,5 @@
       ]
     }
   },
-  "updatedAt": "2026-09-06T15:52:29.585Z"
+  "updatedAt": "2026-09-07T17:58:49.075Z"
 }
